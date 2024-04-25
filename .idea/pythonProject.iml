@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="PYTHON_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/HdMVerlag" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/HdMVerlag/Actions" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/HdMVerlag/Roles" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
