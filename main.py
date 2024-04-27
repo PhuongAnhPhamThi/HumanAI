@@ -11,9 +11,11 @@ from Roles.Autor import Autor
 from Roles.Editor import Editor
 from Roles.Editor import file_path
 
+from ui.main_ui import start_ui     # import start_ui aus ui um UI zu starten
+
 
 async def main(
-        idea: str = """Gedichte für Kinder""",
+        idea: str = ui_promt,       # ui_promt aus UI
         investment: float = 0.2,
         n_round: int = 15,
         add_human: bool = False,
@@ -35,6 +37,9 @@ async def main(
 
 
 if __name__ == "__main__":
+    # UI starten und Input Prompt ui_prompt bekommen
+    ui_prompt = start_ui()
+
     with open(file_path, 'w') as file:
         file.write("")
     fire.Fire(main)
