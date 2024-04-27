@@ -6,17 +6,22 @@ from metagpt.logs import logger
 from metagpt.roles import Role
 from metagpt.schema import Message
 from metagpt.team import Team
-from Roles.Reseacher import Researcher
 from Roles.Autor import Autor
 from Roles.Editor import Editor
+from Roles.Illustrator import Illustrator
 from Roles.Editor import file_path
 
 
 async def main(
-        idea: str = """Gedichte für Kinder""",
+        #idea: str = """Gedichte für Kinder""",
+        idea: str =
+        """{
+            "genre": "Haiku",
+            "gattung": "Gedicht"
+        }"""
+        ,
         investment: float = 0.2,
         n_round: int = 15,
-        add_human: bool = False,
 ):
     logger.info(idea)
 
@@ -25,6 +30,8 @@ async def main(
         [
             Editor(),
             Autor(),
+            Illustrator(is_human=True)
+
 
         ]
     )

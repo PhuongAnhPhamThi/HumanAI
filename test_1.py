@@ -12,11 +12,11 @@ from metagpt.team import Team
 
 import re
 from metagpt.actions import Action
-
+import json
 
 class Write(Action):
     PROMPT_TEMPLATE: str = """
-    {instruction} 
+    write a {instruction} Gedichte
     your content:
     """
 
@@ -103,6 +103,19 @@ class Design(Action):
         return rsp
 
 
+class illustrate(Action):
+    name: str = "illustrate"
+    PROMPT_TEMPLATE: str = """
+    "Hello Frida (Human). Du bist der Illustrator des VerlagHdM. Deine Aufgabe ist Buchcover zu erstellen. Gehzu Seite: "https://www.bing.com/images/create/" und erstell ein Book Cover mit diesem Promtp:
+    Prompt: {prompt_fur_bookcover}"
+    """
+
+    async def run(self, prompt_fur_bookcover: str):
+        prompt = self.PROMPT_TEMPLATE.format(prompt_fur_bookcover=prompt_fur_bookcover)
+        rsp = await self._aask(prompt)
+        return rsp
+
+
 class Writer(Role):
     name: str = "Alice"
     profile: str = "Writer"
@@ -117,7 +130,8 @@ class Writer(Role):
             logger.info(f"{self._setting}: to do {self.rc.todo}({self.rc.todo.name})")
             todo = self.rc.todo
             msg = self.get_memories(k=1)[0]  # find the most recent messages
-            text = await todo.run(msg.content)
+            my_dict = json.loads(msg.content)
+            text = await todo.run(my_dict["genre"])
             msg = Message(content=text, role=self.profile, cause_by=type(todo))
             with open('example.txt', 'a') as file:
                 file.write(self.profile + "\n")
@@ -133,35 +147,34 @@ class Editor(Role):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.set_actions([Write,Edit,writeRezension])
-        self._watch([UserRequirement,Write, Edit,writeRezension])
-
+        self.set_actions([Write, Edit, writeRezension])
+        self._watch([UserRequirement, Write, Edit, writeRezension])
 
     async def _think(self) -> bool:
         last_memory = self.get_memories(k=1)
         logger.info(len(self.get_memories()))
-        #if len(self.get_memories()) > 6:
-            #self._set_state(-1)
-            #return False
+        # if len(self.get_memories()) > 6:
+        # self._set_state(-1)
+        # return False
         if len(self.get_memories()) < 3:
             self.set_actions([Edit])
             self._set_state(0)
             return True
-        elif len(self.get_memories())> 3 :
+        elif len(self.get_memories()) > 3:
             self.set_actions([writeRezension])
             self._set_state(0)
             return True
 
     async def _act(self) -> Message:
-        
+
         print(self.get_memories())
         logger.info(f"{self._setting}: to do {self.rc.todo}({self.rc.todo.name})")
         todo = self.rc.todo
         msg = self.get_memories(k=1)[0]  # find the most recent messages
+
         text = await todo.run(msg.content)
         msg = Message(content=text, role=self.profile, cause_by=type(todo))
         return msg
-
 
 
 class Translator(Role):
@@ -171,7 +184,7 @@ class Translator(Role):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.set_actions([Translate])
-        self._watch([Write])
+        self._watch([])
 
     async def _act(self) -> Message:
         logger.info(f"{self._setting}: to do {self.rc.todo}({self.rc.todo.name})")
@@ -179,8 +192,6 @@ class Translator(Role):
         msg = self.get_memories(k=1)[0]  # find the most recent messages
         text = await todo.run(msg.content)
         msg = Message(content=text, role=self.profile, cause_by=type(todo))
-        print("your Info:")
-        print(self.rc.memory.get_by_action(Write)[0].role == "Writer")
         return msg
 
 
@@ -194,25 +205,50 @@ class Designer(Role):
         self._watch([UserRequirement])
 
 
-async def main(
-        idea: str = """
-                    write a haiku poet in 4 lines.
-                """,
+class Illustrator(Role):
+    name: str = "Frida"
+    profile: str = "Illustrator"
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.set_actions([illustrate])
+        self._watch([UserRequirement])
+
+    async def _act(self) -> Message:
+        logger.info(f"{self._setting}: to do {self.rc.todo}({self.rc.todo.name})")
+        todo = self.rc.todo
+        msg = self.get_memories(k=1)[0]  # find the most recent messages
+        my_dict = json.loads(msg.content)
+        text = await todo.run(my_dict["genre"])
+        msg = Message(content=text, role=self.profile, cause_by=type(todo))
+        print(msg)
+        return msg
+
+
+async def main(
+        #idea: str = """
+                    #write a haiku poet in 4 lines.
+                #""",
+        idea: str =
+        """{
+            "genre": "Fantasy",
+            "gattung": "Gedicht"
+        }"""
+        ,
 
         investment: float = 0.05,
         n_round: int = 6,
         add_human: bool = False,
 ):
     logger.info(idea)
-
     team = Team()
     team.hire(
         [
-            Editor(),
-            #Writer(),
-            #Translator(),
-            # Designer()
+            # Editor(),
+            Writer(),
+            # Mensch(is_human=True),
+            # Translator(),
+            #Illustrator(is_human=True)
         ]
     )
 
