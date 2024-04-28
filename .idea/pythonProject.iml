@@ -6,8 +6,9 @@
       <sourceFolder url="file://$MODULE_DIR$/HdMVerlag" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HdMVerlag/Actions" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HdMVerlag/Roles" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/.venv" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Python 3.11 (HumanAI)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
