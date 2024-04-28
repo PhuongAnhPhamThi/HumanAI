@@ -10,6 +10,7 @@ from Roles.Autor import Autor
 from Roles.Editor import Editor
 from Roles.Illustrator import Illustrator
 from Roles.Editor import file_path
+from ui.main_ui import start_ui     # import start_ui aus ui um UI zu starten
 
 
 async def main(
@@ -42,6 +43,9 @@ async def main(
 
 
 if __name__ == "__main__":
+    # UI starten und Input Prompt ui_prompt bekommen
+    ui_prompt = start_ui()
+
     with open(file_path, 'w') as file:
         file.write("")
     fire.Fire(main)
