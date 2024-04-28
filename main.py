@@ -1,5 +1,4 @@
 import fire
-
 import asyncio
 from metagpt.actions import Action, UserRequirement
 from metagpt.logs import logger
@@ -12,16 +11,14 @@ from Roles.Illustrator import Illustrator
 from Roles.Editor import file_path
 from ui.main_ui import start_ui     # import start_ui aus ui um UI zu starten
 
-
+ui_prompt = start_ui()
+print(ui_prompt )
+print(type(ui_prompt ))
 async def main(
         #idea: str = """Gedichte für Kinder""",
-        idea: str =
-        """{
-            "genre": "Haiku",
-            "gattung": "Gedicht"
-        }"""
+        idea: str = ui_prompt
         ,
-        investment: float = 0.2,
+        investment: float = 0.001,
         n_round: int = 15,
 ):
     logger.info(idea)
@@ -44,7 +41,7 @@ async def main(
 
 if __name__ == "__main__":
     # UI starten und Input Prompt ui_prompt bekommen
-    ui_prompt = start_ui()
+    #ui_prompt = start_ui()
 
     with open(file_path, 'w') as file:
         file.write("")
