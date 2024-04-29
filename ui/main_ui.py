@@ -2,13 +2,17 @@ import tkinter as tk
 from tkinter import ttk
 import json
 import webbrowser
-from workspace.verbindung import set_link_coverEbook
+#from workspace.verbindung import set_link_coverEbook
 
+# note to Konrad: in the main function start_second_ui(prompt) i give prompt directly through parameter "prompt". you
+# dont need to import anything or write a extra func to save the prompt.
 
-def some_function():
+"""
+def some_function(prompt):
     from workspace.verbindung import prompt_coverEbook
     global cover_prompt
     cover_prompt = prompt_coverEbook
+"""
 
 
 def submit_prompt():
@@ -40,11 +44,15 @@ def open_url(url):
     webbrowser.open(url)
 
 
+"""
 def save_embed_link():
     set_link_coverEbook(cover_link_entry.get())
+    print(cover_link_entry.get())
+    second_root.destroy()
+"""
 
 
-def start_ui():
+def start_ui():  # fur User Input am Anfang
     global root, genre_combobox, gattung_combobox
     root = tk.Tk()
     root.title("E-Book Generator")
@@ -74,10 +82,17 @@ def start_ui():
     return ui_prompt  # Return the selections after the UI has closed
 
 
-def start_second_ui():
-    global second_root, cover_link_entry
+def start_second_ui(prompt):  # für book cover
+    global second_root, cover_link_entry, saved_link
     second_root = tk.Tk()
     second_root.title("E-Book Generator")
+
+    saved_link = None  # Initialize saved_link variable
+
+    def save_embed_link():
+        global saved_link
+        saved_link = cover_link_entry.get()  # Get the value of cover_link_entry
+        second_root.destroy()  # Close the UI
 
     heading = tk.Frame(second_root, width=400)
     heading.pack()
@@ -87,18 +102,18 @@ def start_second_ui():
     cover.pack(anchor="w")
     cover_link = tk.Frame(second_root, width=400)
     cover_link.pack()
-    cover_link_label = tk.Label(cover_link, text="Kopiere jetzt den Embed-Code HTML (Vollansicht-Link) und füge ihn hier ein:")
+    cover_link_label = tk.Label(cover_link,
+                                text="Kopiere jetzt den Embed-Code HTML (Vollansicht-Link) und füge ihn hier ein:")
     cover_link_label.grid(row=0, column=0)
     cover_link_entry = tk.Entry(cover_link, width=67)
     cover_link_entry.grid(row=1, column=0, sticky="w")
-    cover_link_button = tk.Button(cover_link, text="Link speichern", command=lambda: save_embed_link())
+    cover_link_button = tk.Button(cover_link, text="Link speichern", command=save_embed_link)
     cover_link_button.grid(row=1, column=1)
 
     # Text mit dem Cover Prompt
     cover_prompt_label = tk.Text(cover, wrap="word", height=8, width=50)
     cover_prompt_label.grid(row=0, column=0, sticky="w")
-    some_function()
-    cover_prompt_label.insert(tk.END, cover_prompt)
+    cover_prompt_label.insert(tk.END, prompt)
     cover_prompt_label.config(state="disabled")
 
     # Button zum Kopieren des Texts
@@ -119,8 +134,12 @@ def start_second_ui():
 
     second_root.mainloop()
 
+    return saved_link
+
 
 # This allows the module to be imported without immediately running the UI
 if __name__ == "__main__":
-    start_ui()
-    start_second_ui()
+    #start_ui()
+    #start_second_ui()
+    link = start_second_ui("Prompt text")
+    print("Link entered:", link)

@@ -1,4 +1,3 @@
-
 from metagpt.actions import Action
 
 
@@ -13,5 +12,9 @@ class coverKonzipieren(Action):
 
     async def run(self, context: str):
         prompt = self.PROMPT_TEMPLATE.format(context=context)
-        rsp = await self._aask(prompt)
+        #rsp = await self._aask(prompt)
+        rsp = """
+        
+Generiere ein Buchcover f�r das E-Book "Haiku Harmony: Poems of Nature and Serenity" von Maja, das die Sch�nheit der Natur und die Ruhe der Poesie einf�ngt. Verwende nat�rliche Elemente wie Blumen, B�ume, Wasser oder Landschaften, um eine harmonische und beruhigende Atmosph�re zu schaffen. Betone die Einfachheit und zeitlose Sch�nheit der haiku-Gedichte, um die Leser zum Eintauchen in die Welt der Poesie und Natur zu inspirieren. 
+        """
         return rsp

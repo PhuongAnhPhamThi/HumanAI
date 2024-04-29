@@ -20,5 +20,18 @@ In einem dritten Schritt bewerte die Spannungskurve des Textes. Wenn du Probleme
 
     async def run(self, context1: str, context2: str, genre: str, gattung: str):
         prompt = self.PROMPT_TEMPLATE.format(context1=context1, context2=context2, genre=genre, gattung=gattung)
-        rsp = await self._aask(prompt)
+        #rsp = await self._aask(prompt)
+        rsp = """
+        - Das Manuskript entspricht weitgehend der Aufgabenstellung und der Gliederung, die ich der Autorin gegeben habe. Es behandelt die Kunst des haiku, die Jahreszeiten, die menschliche Erfahrung, Stille und Meditation sowie die Kraft der haiku-Gedichte.
+- Der Schreibstil ist pr�gnant und einf�hlsam, was der Zielsetzung des Buches entspricht, die Leser zu ber�hren und zu inspirieren.
+- Die haiku-Gedichte sind gut strukturiert und fangen die Sch�nheit der Natur sowie die menschliche Erfahrung ein.
+
+Qualit�t des Textes:
+- Die haiku-Gedichte sind gut geschrieben und vermitteln die gew�nschte Ruhe und Inspiration.
+- Der Text ist gut strukturiert und leicht verst�ndlich.
+
+Spannungskurve des Textes:
+- Die haiku-Gedichte erzeugen eine ruhige und meditative Atmosph�re, die die Leser in die Welt der Natur und der menschlichen Erfahrung eintauchen l�sst.
+- Die Gedichte k�nnten jedoch noch etwas mehr Vielfalt in Bezug auf Emotionen und Themen bieten, um die Leser noch st�rker zu ber�hren. 
+"""
         return rsp

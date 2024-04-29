@@ -13,5 +13,10 @@ class textUeberpruefenZiklus(Action):
 
     async def run(self, context1: str, context2: str):
         prompt = self.PROMPT_TEMPLATE.format(context1=context1, context2=context2)
-        rsp = await self._aask(prompt)
+        #rsp = await self._aask(prompt)
+        rsp = """
+        
+- Die haiku-Gedichte k�nnten noch etwas mehr Vielfalt in Bezug auf Emotionen und Themen bieten, um die Leser noch st�rker zu ber�hren.
+- Vielleicht k�nnten Sie die Auswahl der Themen und Emotionen in den Gedichten �berdenken, um eine breitere Palette von Gef�hlen und Erfahrungen abzudecken. 
+        """
         return rsp

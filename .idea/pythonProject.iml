@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/HdMVerlag" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HdMVerlag/Actions" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HdMVerlag/Roles" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/workspace" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

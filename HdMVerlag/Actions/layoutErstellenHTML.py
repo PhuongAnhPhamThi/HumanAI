@@ -5,9 +5,9 @@ from metagpt.actions import Action
 class layoutErstellenHTML(Action):
     PROMPT_TEMPLATE: str = """
 # Context 1: {context1}
-# Context 2: {context1}
+# Context 2: {context2}
 # Du bist ein Layout Designer und arbeitest in einem Verlag zusammen mit einem Editor an der Erstellung eines E-Books.
-Der Lektor hat dir ein fertiges Buchmanuskript (siehe Context 1) und seine Empfehlungen für die weitere Arbeit daran gegeben (siehe Context 2). Unter Berücksichtigung der Empfehlungen des Editors und deiner beruflichen Erfahrung erstelle mit Hilfe geeigneter Markup-Sprachen das Layout des Buches und bereitest es für den nächsten Schritt - die Konvertierung ins EPUB-Format - vor.
+Der Editor hat dir ein fertiges Buchmanuskript (siehe Context 1) und seine Empfehlungen für die weitere Arbeit daran gegeben (siehe Context 2). Unter Berücksichtigung der Empfehlungen des Editors und deiner beruflichen Erfahrung erstelle mit Hilfe geeigneter Markup-Sprachen das Layout des Buches und bereitest es für den nächsten Schritt - die Konvertierung ins EPUB-Format - vor.
 
 Verwende die folgenden Anweisungen:
 
@@ -36,7 +36,7 @@ Geben Sie „html dein_code_hier“ ohne andere Texte zurück. dein Code:
 
     name: str = "layoutErstellenHTML"
 
-    async def run(self, context: str):
-        prompt = self.PROMPT_TEMPLATE.format(context=context)
+    async def run(self, context1: str, context2: str, link: str):
+        prompt = self.PROMPT_TEMPLATE.format(context1=context1,context2=context2,link=link)
         rsp = await self._aask(prompt)
         return rsp

@@ -41,8 +41,17 @@ class Autor(Role):
             return True
 
         elif last_memory[0].role == "Editor" and self.rc.memory.get_by_action(textUeberpruefenZiklus)[0].content != "" \
-                and track_editor < max_round-1 and "sieht gut aus" not in last_memory[
+                and track_editor <= max_round and "sieht gut aus" not in last_memory[
             0].content and "Sieht gut aus" not in last_memory[0].content:
+            self.set_actions([textEditierenZiklus])
+            self._set_state(0)
+            return True
+
+        elif last_memory[0].role == "Editor" and self.rc.memory.get_by_action(textUeberpruefenZiklus)[0].content != "" \
+                and track_editor <= max_round:
+            # and "sieht gut aus" not in last_memory[
+            # 0].content and "Sieht gut aus" not in last_memory[0].content\
+
             self.set_actions([textEditierenZiklus])
             self._set_state(0)
             return True
@@ -71,7 +80,10 @@ class Autor(Role):
 
         elif isinstance(todo, textEditierenZiklus):
             context1 = self.rc.memory.get_by_action(textUeberpruefenZiklus)[0].content
-            context2 = self.rc.memory.get_by_action(textEditieren)[0].content
+            if len(self.rc.memory.get_by_action(textEditierenZiklus)) == 0:
+                context2 = self.rc.memory.get_by_action(textEditieren)[0].content
+            else:
+                context2 = self.rc.memory.get_by_action(textEditierenZiklus)[0].content
             rslt = await todo.run(context1=context1, context2=context2)
             msg = Message(content=rslt, role=self.profile, cause_by=type(todo))
             self.rc.memory.add(msg)
@@ -82,7 +94,7 @@ class Autor(Role):
             msg = None
             pass
 
-        with open(file_path, 'a') as file:
+        with open(file_path + "conversation.txt", 'a',encoding="utf-8") as file:
             file.write("******" + self.profile + " - " + self.rc.todo.name + " :\n")
             file.write(
                 rslt + " \n\n" + "-------------------------------------------------------------------------------------------------" + "\n\n\n")
