@@ -25,8 +25,8 @@ Alle obengenannte Elemente müssen vorhanden sein.
 
     async def run(self, context1: str, context2: str):
         prompt = self.PROMPT_TEMPLATE.format(context1=context1, context2=context2)
-        #rsp = await self._aask(prompt)
-        rsp = """
+        rsp = await self._aask(prompt)
+        rsp1 = """
         
 **Autorenvita**
 Maja ist eine leidenschaftliche Autorin von haiku-Gedichten und Naturpoesie, die sich von der Sch�nheit der Natur inspirieren l�sst. Ihre Werke laden die Leser ein, in die Welt der Poesie einzutauchen und Ruhe sowie Inspiration zu finden.

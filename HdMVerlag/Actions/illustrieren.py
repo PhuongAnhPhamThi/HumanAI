@@ -1,7 +1,6 @@
 from metagpt.actions import Action
 from metagpt.configs.llm_config import LLMConfig
-from Roles.HumanProvider_Hdm import HumanProvider_Hdm
-
+from Roles.HumanProvider_Hdm import HumanProvider_Hdm_Illustration
 
 mock_llm_config = LLMConfig(
     llm_type="mock",
@@ -15,13 +14,8 @@ mock_llm_config = LLMConfig(
 
 class illustrieren(Action):
     name: str = "illustrieren"
-    PROMPT_TEMPLATE: str = """
-"Hello Frida (Human). Du bist der Illustrator des VerlagHdM. Deine Aufgabe ist Buchcover zu erstellen. Gehzu Seite: "https://www.bing.com/images/create/" und erstell ein Book Cover mit diesem Promtp:
-Prompt: {prompt_fur_bookcover}"
-"""
 
     async def run(self, prompt_fur_bookcover: str):
-        #prompt = self.PROMPT_TEMPLATE.format(prompt_fur_bookcover=prompt_fur_bookcover)
-        human_provider = HumanProvider_Hdm(mock_llm_config)
+        human_provider = HumanProvider_Hdm_Illustration(mock_llm_config)
         rsp = await human_provider.aask(msg=prompt_fur_bookcover)
         return rsp

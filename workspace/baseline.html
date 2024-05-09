@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ data.titel }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .cover {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f9f9f9; /* Fallback color */
+        }
+
+        .cover img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .title {
+            text-align: center;
+            max-width: 800px; /* Set maximum width for the title section */
+            margin: 0 auto; /* Center the title section horizontally */
+            padding: 20px; /* Add padding for better readability */
+        }
+
+        .title h1 {
+            font-size: 4em; /* Increase font size */
+            font-weight: bold; /* Emphasize with bold */
+            color: #292929;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .autor {
+            text-align: center;
+            max-width: 800px; /* Set maximum width for the author section */
+            margin: 0 auto; /* Center the author section horizontally */
+            padding: 20px; /* Add padding for better readability */
+        }
+
+        .autor h1 {
+            font-size: 3em;
+            color: #292929;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .autorenvita,
+        .inhalt,
+        .metadaten {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            margin-top: 20px;
+        }
+
+        .autorenvita p {
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+
+        .inhalt ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .inhalt ul li {
+            margin-bottom: 10px;
+        }
+
+        .inhalt ul li a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .metadaten dl {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .metadaten dt,
+        .metadaten dd {
+            flex: 0 0 50%;
+            padding: 5px;
+        }
+
+        .metadaten dt {
+            font-weight: bold; /* Emphasize titles with bold */
+        }
+
+        .metadaten dd {
+            margin: 0;
+        }
+
+        /* Center main text */
+        #main-text {
+            text-align: center;
+            max-width: 800px; /* Set maximum width for the text frame */
+            margin: 0 auto; /* Center the text frame horizontally */
+            padding: 20px; /* Add padding for better readability */
+        }
+
+        #main-text p {
+            text-align: justify;
+        }
+    </style>
+</head>
+<body>
+    <!-- Cover -->
+    <div class="cover">
+        <img src="{{ data.cover_link }}" alt="Cover Image">
+    </div>
+
+    <!-- Title -->
+    <div class="title">
+        <h1>{{ data.titel }}</h1>
+    </div>
+
+    <!-- Name des Autors -->
+    <div class="autor">
+        <h1>{{ data.autor }}</h1>
+    </div>
+
+    <!-- Autorenvita -->
+    <div class="autorenvita">
+        <p>{{ data.autorenvita }}</p>
+    </div>
+
+    <!-- Inhaltsverzeichnis -->
+    <div class="inhalt">
+        <h2>Inhaltsverzeichnis</h2>
+        <ul>
+            {% for kapitel, kapitel_data in data.kapiteln.items() %}
+            <li><a href="#{{ kapitel }}">{{ kapitel }}: {{ kapitel_data["Kapitel Titel"] }}</a></li>
+            {% endfor %}
+        </ul>
+        Anzahl der Kapitel: {{ data.kapiteln|length }}
+    </div>
+
+    <!-- Text des Manuskripts -->
+    <div id="main-text">
+        {% for kapitel, kapitel_data in data.kapiteln.items() %}
+        <div id="{{ kapitel }}">
+            <h2>{{ kapitel }}: {{ kapitel_data["Kapitel Titel"] }}</h2>
+            <p>{{ kapitel_data["Kapitel Inhalt"] }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Metadaten -->
+    <div class="metadaten">
+        <dl>
+            {% for key, value in data.metadaten.items() %}
+            <dt>{{ key }}</dt>
+            <dd>{{ value }}</dd>
+            {% endfor %}
+        </dl>
+    </div>
+</body>
+</html>

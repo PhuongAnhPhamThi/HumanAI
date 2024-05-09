@@ -3,69 +3,54 @@ from metagpt.actions import Action
 
 class konzeptErstellen(Action):
     PROMPT_TEMPLATE: str = """
-# Context: {context}
-# Erstelle auf der Grundlage deiner Notizen im Context eine detaillierte Anleitung für die Autorin oder den Autor, wie sie dieses Buch schreiben soll. Wiederhole in der Anleitung zusätzlich deine Ausarbeitungen wie z.B.: Arbeitstitel, ausführliche Beschreibung der Zielgruppe, Gliederung, Inhaltsverzeichnis, Tonalität.
+# Context 1: {context1}
+# Context 2: Titel: {context2}
+# Erstelle auf der Grundlage deiner Notizen im Context 1 eine detaillierte Anleitung für die Autorin oder den Autor, wie sie dieses Buch schreiben soll. Wiederhole in der Anleitung zusätzlich deine Ausarbeitungen wie z.B.: Arbeitstitel (nimm der Titel im Context 2), ausführliche Beschreibung der Zielgruppe, Inhaltsverzeichnis, Beschreibung der Tonalität.
 # Output: Aufgabenstellung für Autorin:
+
     """
 
     name: str = "konzeptErstellen"
 
-    async def run(self, context: str):
-        prompt = self.PROMPT_TEMPLATE.format(context=context)
-        #rsp = await self._aask(prompt)
-        rsp = """
-        Liebe Autorin,
+    async def run(self, context1: str, context2: str):
+        prompt = self.PROMPT_TEMPLATE.format(context1=context1, context2=context2)
+        rsp = await self._aask(prompt)
+        rsp1 = """
+Aufgabenstellung für die Autorin:
+Arbeitstitel: "Schatten der Ewigen"
 
-ich freue mich, dass Sie sich dazu entschieden haben, das Buch "Haiku Harmony: Poems of Nature and Serenity" zu schreiben. Basierend auf Ihrem Konzept und den ausgearbeiteten Details, m�chte ich Ihnen eine detaillierte Anleitung f�r die Erstellung dieses Buches geben.
+Beschreibung der Zielgruppe:
+Das Buch richtet sich an Jugendliche und junge Erwachsene im Alter von 14 bis 25 Jahren, die eine Leidenschaft für fantastische Welten, Magie und Abenteuer hegen. Sowohl männliche als auch weibliche Leser werden angesprochen. Diese Zielgruppe sucht nach einer fesselnden Handlung mit starken Charakteren und einer geheimnisvollen Atmosphäre.
 
-Arbeitstitel:
-"Haiku Harmony: Poems of Nature and Serenity"
+Konzept:
+"Schatten der Ewigen" ist eine epische Fantasygeschichte, die in einer Welt voller Magie, Geheimnisse und Intrigen spielt. Die Hauptprotagonistin ist eine junge Magierin namens Lyra, die von einer alten Prophezeiung dazu bestimmt ist, das Gleichgewicht zwischen Licht und Dunkelheit wiederherzustellen. Der Weg zur Erfüllung ihres Schicksals ist von Gefahren gesäumt, und sie muss sich gegen finstere Mächte behaupten, die ihre Pläne durchkreuzen wollen.
 
-Zielgruppe:
-Ihre Zielgruppe sind Liebhaber der Natur und Menschen, die nach Ruhe und Inspiration suchen. Das Buch soll Leser aller Altersgruppen ansprechen und eine zeitlose Thematik aufgreifen, die die Sch�nheit der Natur und die menschliche Erfahrung einf�ngt, um sie zu beruhigen und zu inspirieren.
-
-Tonalit�t des Buches:
-Die Tonalit�t sollte ruhig, meditativ und inspirierend sein, um die Leser zu beruhigen und sie mit der Sch�nheit der Natur in Einklang zu bringen.
-
-Gliederung des Buches:
-1. Einf�hrung: Die Kunst des haiku
-   - Was ist haiku?
-   - Die Geschichte des haiku
-   - Die Bedeutung von haiku in der heutigen Zeit
-
-2. Jahreszeiten: Gedichte �ber Natur und Jahreszeiten
-   - Fr�hlingserwachen
-   - Sommerhitze
-   - Herbstmelancholie
-   - Winterstille
-
-3. Menschliche Erfahrung: Gedichte �ber Emotionen und menschliche Beziehungen
-   - Liebe und Verlust
-   - Freude und Trauer
-   - Hoffnung und Sehnsucht
-
-4. Stille und Meditation: Gedichte, die zur Ruhe und Besinnung einladen
-   - Naturverbundenheit
-   - Innere Ruhe
-   - Achtsamkeit und Meditation
-
-5. Abschluss: Die Kraft der haiku-Gedichte
-   - Die Kraft der haiku-Gedichte
-   - Anregungen zum eigenen Schreiben von haiku
+Tonalität:
+Die mystische Tonalität wird durch eine reiche Sprache, poetische Beschreibungen und eine Atmosphäre des Geheimnisvollen und Unerklärlichen erreicht. Elemente wie verborgene Prophezeiungen, uralte Rituale und mysteriöse Wesen tragen dazu bei, eine Welt zu erschaffen, die die Fantasie der Leser beflügelt und sie in ihren Bann zieht.
 
 Grobes Inhaltsverzeichnis:
-I. Einf�hrung
-II. Jahreszeiten
-III. Menschliche Erfahrung
-IV. Stille und Meditation
-V. Abschluss
 
-Schreibstil:
-Ihr Schreibstil sollte die Sch�nheit der Natur und die Ruhe, die sie vermittelt, widerspiegeln. Die haiku-Gedichte sollten pr�gnant und einf�hlsam sein, um die Leser zu ber�hren und zu inspirieren.
+I. Das Erwachen der Prophezeiung
 
-Ich bin �berzeugt, dass Ihr Buch "Haiku Harmony: Poems of Nature and Serenity" eine wunderbare Sammlung von haiku-Gedichten sein wird, die die Leser in die Welt der Natur und der menschlichen Erfahrung eintauchen l�sst. Ich freue mich darauf, Ihr Buch zu lesen und bin sicher, dass es viele Menschen inspirieren wird.
+Einführung in die Welt von Lyra
+Die Enthüllung ihrer Bestimmung
+II. Die Prüfung der Magie
 
-Mit freundlichen Gr��en,
-Bob 
-        """
+Lyras Reise zu den uralten Stätten der Macht
+Konfrontation mit dunklen Kräften
+III. Das Schicksal der Ewigen
+
+Die finale Schlacht um das Gleichgewicht der Welt
+Der Triumph des Lichts über die Dunkelheit
+Schreibanweisungen:
+
+Beginne mit einer fesselnden Einführung, die die Leser sofort in die Welt von Lyra einführt und ihre Neugier weckt.
+Stelle die Hauptfigur, Lyra, und ihre Motivationen deutlich dar, damit die Leser sich mit ihr identifizieren können.
+Baue Spannung durch geschickt platzierte Wendungen und Enthüllungen auf, besonders während Lyras Reise und den Konfrontationen mit dunklen Mächten.
+Achte darauf, die mystische Tonalität konsequent durch poetische Beschreibungen und das Einflechten von geheimnisvollen Elementen aufrechtzuerhalten.
+Gib den Charakteren Tiefe, indem du ihre Entwicklung im Laufe der Geschichte zeigst und ihre Beziehungen untereinander ausbaust.
+Schließe mit einem packenden Finale ab, das die Leser zufriedenstellt und sie auf weitere Abenteuer in dieser faszinierenden Welt hoffen lässt.
+Abschluss:
+"Schatten der Ewigen" soll die Leser in eine faszinierende Welt entführen, in der das Unmögliche möglich wird. Es bietet Unterhaltung, Spannung und regt zum Nachdenken über die Macht des Schicksals und die Bedeutung von Mut und Freundschaft an.
+"""
         return rsp

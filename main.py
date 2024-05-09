@@ -1,24 +1,29 @@
 import fire
+import os
 from metagpt.logs import logger
-from metagpt.roles import Role
-from metagpt.schema import Message
 from metagpt.team import Team
 from Roles.Autor import Autor
 from Roles.Editor import Editor
-#from Roles.Editor2 import Editor,Editor2
-from Roles.Illustrator import Illustrator
-from Roles.LayoutDesigner import LayoutDesigner
-from Roles.Editor import file_path
-from ui.main_ui import start_ui, start_second_ui    # import start_ui aus ui um UI zu starten
-
+from Roles.Human_User import Human_User
+from ui.main_ui import start_ui  # import start_ui aus ui um UI zu starten
+from runport import start_server
+from workspace.layouterstellen import update_html_from_json
 
 
 ui_prompt = start_ui()
 
 async def main(
-        #idea: str = """Gedichte für Kinder""",
-        idea: str = ui_prompt,
-        investment: float = 0.08,
+
+        #idea: str = ui_prompt,
+        idea: str = """
+{
+            "genre": "Roman über Studenten",
+            "gattung": "Liebe Geschichte",
+            "tonalitaet" : "kindisch",
+            "anzahlvonkapitel":3
+        }
+        """,
+        investment: float = 0.1,
         n_round: int = 15,
 ):
     logger.info(idea)
@@ -27,22 +32,21 @@ async def main(
     team.hire(
         [
             Editor(),
-            #Editor2(),
             Autor(),
-            Illustrator(is_human=True),
-            LayoutDesigner(),
-
-
+            Human_User(is_human=True),
+            #LayoutDesigner(),
         ]
     )
 
     team.invest(investment=investment)
     team.run_project(idea)
     await team.run(n_round=n_round)
+    update_html_from_json()
+    start_server()
 
 
 if __name__ == "__main__":
-    with open(file_path + "conversation.txt", 'w') as file:
+    with open(os.path.join("workspace") + "/" + "conversation.txt", 'w') as file:
         file.write("")
     fire.Fire(main)
 

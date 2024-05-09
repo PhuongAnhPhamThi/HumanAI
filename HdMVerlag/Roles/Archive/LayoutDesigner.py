@@ -2,10 +2,10 @@ from metagpt.logs import logger
 from metagpt.roles import Role
 from metagpt.schema import Message
 from Actions.illustrieren import illustrieren
-from Actions.layoutErstellenHTML import layoutErstellenHTML
-from Actions.layoutKonzipieren import layoutKonzipieren
-from Actions.buchZusammenfassen import buchZusammenfassen
-from Editor import file_path,Editor
+from Archive.layoutErstellenHTML import layoutErstellenHTML
+from Archive.layoutKonzipieren import layoutKonzipieren
+from Archive.buchZusammenfassen import buchZusammenfassen
+from Editor import file_path
 
 
 class LayoutDesigner(Role):
@@ -33,7 +33,6 @@ class LayoutDesigner(Role):
         logger.info(f"{self._setting}: to do {self.rc.todo}({self.rc.todo.name})")
         todo = self.rc.todo
         if isinstance(todo, layoutErstellenHTML):
-            #context1 = self.rc.memory.get_by_action(buchZusammenfassen)[0].content
             with open(file_path + "buch_zusammenfassung.txt", 'r',encoding="utf-8") as file:
                 context1 = file.read()
             context2 = self.rc.memory.get_by_action(layoutKonzipieren)[0].content
@@ -45,7 +44,7 @@ class LayoutDesigner(Role):
             msg = Message(content=rslt, role=self.profile, cause_by=type(todo))
             self.rc.memory.add(msg)
 
-            with open(file_path + "conversation.txt", 'a') as file:
+            with open(file_path + "conversation.txt", 'a',encoding="utf-8") as file:
                 file.write("******" + self.profile + " - " + self.rc.todo.name + " :\n")
                 file.write(
                     rslt + " \n\n" + "-------------------------------------------------------------------------------------------------" + "\n\n\n")
