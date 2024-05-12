@@ -60,6 +60,56 @@ def save_embed_link():
     second_root.destroy()
 """
 
+
+def select_title(title_json):
+    set_wait_for_title(True)
+    title_dict = json.loads(title_json)
+    wait_label.configure(text="Wählen Sie einen der folgenden Titel für Ihr Ebook:")
+    global titel_textbox, titel_combobox, titel_button
+    titel_text = f"""
+    1. {title_dict["1"]}
+    2. {title_dict["2"]}
+    3. {title_dict["3"]}
+    4. {title_dict["4"]}
+    5. {title_dict["5"]}"""
+    titel_textbox = ctk.CTkTextbox(wait_root, wrap="word")
+    titel_textbox.pack()
+    titel_textbox.insert(ctk.END, titel_text)
+    titel_textbox.configure(state="disabled")
+    titel_nums = ["1", "2", "3", "4", "5"]
+    titel_combobox = ctk.CTkComboBox(wait_root, values=titel_nums)
+    titel_combobox.pack()
+    titel_button = ctk.CTkButton(wait_root, text="Weiter", command=lambda: delete_title_elements(title_dict[titel_combobox.get()]))
+    titel_button.pack()
+
+
+def delete_title_elements(final_title):
+    wait_label.configure(text="Warte, während das E-Book generiert wird.")
+    titel_textbox.destroy()
+    titel_combobox.destroy()
+    titel_button.destroy()
+    set_final_title(final_title)
+    set_wait_for_title(False)
+
+
+def set_final_title(new_final_title):
+    global final_title
+    final_title = new_final_title
+
+
+def get_final_title():
+    return final_title
+
+
+def set_wait_for_title(status: bool):
+    global wait_for_title
+    wait_for_title = status
+
+
+def get_wait_for_title():
+    return wait_for_title
+
+
 def html_generated():
     wait_label.configure(text="Das E-Book ist fast fertig, klicken Sie auf \"Weiter\" um fortzufahren.")
     continue_button = ctk.CTkButton(wait_root, text="Weiter", command=wait_root.destroy)

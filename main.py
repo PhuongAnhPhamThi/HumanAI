@@ -1,7 +1,5 @@
-import os
-import threading
-
 import fire
+import os
 from metagpt.logs import logger
 from metagpt.team import Team
 
@@ -10,8 +8,13 @@ from Roles.Editor import Editor
 from Roles.Human_User import Human_User
 from ui.main_ui import start_ui, start_wait_ui  # import start_ui aus ui um UI zu starten
 from workspace.Utils.json_handle import remove_values_json
+from ui.main_ui import start_ui, start_second_ui, start_wait_ui, html_generated, select_title, get_final_title, get_wait_for_title  # import start_ui aus ui um UI zu starten
+from runport import start_server
+from workspace.layouterstellen import update_html_from_json
 from workspace.writeLatex import generate_pdf
 
+import threading
+import time
 
 # help function for wait UI
 def controlled_start_wait_ui(stop_event):
@@ -25,7 +28,14 @@ wait_thread = threading.Thread(target=controlled_start_wait_ui, args=(stop_event
 
 wait_thread.start()
 
-ans should be stopped with:
+# Title selection should look like this:
+
+select_title(title_json)        # just transforms the UI
+while get_wait_for_title():     # we need this, to wait for the User to select one title
+    time.sleep(1)               # without sleep CPU goes crazy
+final_title = get_final_title() # get_final_title() returns the title selected by User
+
+# and should be stopped with:
 
 stop_event.set()
 html_generated()
@@ -71,3 +81,4 @@ if __name__ == "__main__":
         file.write("")
     remove_values_json()
     fire.Fire(main)
+
