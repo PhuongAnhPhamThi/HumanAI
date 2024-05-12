@@ -1,0 +1,102 @@
+\documentclass[12pt]{article} % Set base font size to 12pt
+\usepackage{graphicx}
+\usepackage{geometry} % Adjust page margins
+\usepackage{setspace} % Line spacing
+\usepackage{titlesec} % Customize section titles
+\usepackage{tocloft} % Customize table of contents
+\usepackage{fancyhdr} % Headers and footers
+\usepackage{hyperref} % Add hyperlinks
+\usepackage{xcolor} % Color package
+
+% Set page margins
+\geometry{a4paper, margin=2.5cm}
+
+% Set line spacing
+\setstretch{1.5} % Adjust line spacing for better readability
+
+% Customize section titles
+\titleformat{\section}[block]{\LARGE\bfseries\color{black}}{}{0em}{\filcenter}
+\titlespacing*{\section}{0pt}{3.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}
+
+% Customize table of contents
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\contentsname}{Inhaltsverzeichnis}
+\renewcommand{\cftaftertoctitle}{\par\nobreak\bigskip\bigskip\bigskip} % Add space after TOC title
+\setlength{\cftbeforesecskip}{0.5em} % Adjust spacing between section entries
+\setlength{\cftaftertoctitleskip}{2cm} % Adjust spacing between TOC title and entries
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+
+% Define headers and footers
+\pagestyle{fancy}
+\fancyhf{} % Clear default headers and footers
+\fancyhead[R]{\thepage} % Page number on right side of header
+\fancyhead[L]{\nouppercase{\leftmark}} % Chapter title on left side of header
+\renewcommand{\headrulewidth}{0pt} % Remove header line
+\fancyfoot[C]{\thepage} % Page number in the center of footer
+\renewcommand{\footrulewidth}{0pt} % Remove footer line
+
+% Define light gray color
+\definecolor{lightgray}{RGB}{240,240,240}
+
+\begin{document}
+
+% Title Page
+\begin{titlepage}
+    \centering
+    \vspace*{3cm}
+    {\Huge\bfseries\textcolor{blue}{\MakeUppercase{ {{ data.titel }} }}\par} % Increased font size and colored title
+    \vspace{0.5cm} % Adjust space between title and author
+    {\Large\textit{ {{ data.autor }} }\par} % Italic author name
+    \vfill
+    \includegraphics[width=0.9\textwidth]{ {{ data.cover }} } % Larger cover image
+    \vfill
+    \today
+\end{titlepage}
+
+% Autorenvita
+\section*{Autorenvita}
+\vspace{4cm} % Adjust space between "Autorenvita" and "Inhaltsverzeichnis"
+\begin{minipage}{\textwidth}
+    {{ data.autorenvita }}
+\end{minipage}
+
+% Place table of contents on a separate page
+\clearpage
+\tableofcontents
+\clearpage
+
+% Chapters
+{% for chapter, chapter_data in data.kapiteln.items() %}
+\section{ {{ chapter_data["Kapitel Titel"] }} }
+\begin{minipage}{\textwidth}
+    {{ chapter_data["Kapitel Inhalt"] }}
+\end{minipage}
+{% endfor %}
+\clearpage
+% Metadata
+\section*{Metadaten}
+\begin{minipage}{\textwidth}
+    \colorbox{lightgray}{
+        \begin{minipage}{\dimexpr\textwidth-2\fboxsep}
+            \vspace{4cm}
+            \begin{itemize}
+                \item Name des Buches: {{ data.metadaten["Name des Buches"] }}
+                \item Name des Autors: {{ data.metadaten["Name des Autors"] }}
+                \item Name des Herausgebers: {{ data.metadaten["Name des Herausgebers"] }}
+                \item Name des Verlags: {{ data.metadaten["Name des Verlags"] }}
+                \item Adresse des Verlags: {{ data.metadaten["Adresse des Verlags"] }}
+                \item Datum der Veröffentlichung: {{ data.metadaten["Datum der Veröffentlichung"] }}
+            \end{itemize}
+            \vspace{4cm}
+        \end{minipage}
+
+    }
+\end{minipage}
+
+
+\end{document}
