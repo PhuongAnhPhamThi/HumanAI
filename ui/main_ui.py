@@ -8,13 +8,6 @@ import os
 # note to Konrad: in the main function start_second_ui(prompt) i give prompt directly through parameter "prompt". you
 # dont need to import anything or write a extra func to save the prompt.
 
-"""
-def some_function(prompt):
-    from workspace.verbindung import prompt_coverEbook
-    global cover_prompt
-    cover_prompt = prompt_coverEbook
-"""
-
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
 
@@ -53,17 +46,10 @@ def open_url(url):
     webbrowser.open(url)
 
 
-"""
-def save_embed_link():
-    set_link_coverEbook(cover_link_entry.get())
-    print(cover_link_entry.get())
-    second_root.destroy()
-"""
-
-
 def select_title(title_json):
     set_wait_for_title(True)
-    title_dict = json.loads(title_json)
+    #title_dict = json.loads(title_json)
+    title_dict = title_json
     wait_label.configure(text="Wählen Sie einen der folgenden Titel für Ihr Ebook:")
     global titel_textbox, titel_combobox, titel_button
     titel_text = f"""
@@ -230,10 +216,10 @@ def start_wait_ui(stop_event):
 
         wait_root.mainloop()
 
-
 # This allows the module to be imported without immediately running the UI
 if __name__ == "__main__":
     #start_ui()
-    #start_second_ui()
-    link = start_second_ui("Prompt text")
-    print("Link entered:", link)
+    start_second_ui()
+    #link = start_second_ui("Prompt text")
+    #print("Link entered:", link)
+    #start_wait_ui(stop_event=None)

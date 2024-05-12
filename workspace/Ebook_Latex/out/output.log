@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.10.25)  12 MAY 2024 13:52
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.10.25)  12 MAY 2024 16:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -382,7 +382,7 @@ Package hyperref Info: Link coloring ON on input line 46.
 \@outlinefile=\write3
 \openout3 = `output.out'.
 
-<cover.jpg, id=15, 770.88pt x 770.88pt>
+<cover.jpg, id=19, 770.88pt x 770.88pt>
 File: cover.jpg Graphic file (type jpg)
 <use cover.jpg>
 Package pdftex.def Info: cover.jpg  used on input line 56.
@@ -392,6 +392,15 @@ Package pdftex.def Info: cover.jpg  used on input line 56.
 
 {C:/Users/admin/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map} <./cover.jpg>
 ]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[2]
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <12> on input line 66.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -419,7 +428,12 @@ l.69 \clearpage
 \openout4 = `output.toc'.
 
 
-[2
+pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.71 \clearpage
+                [2
 
 ]
 
@@ -442,7 +456,25 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [4]
-Overfull \hbox (7.83325pt too wide) in paragraph at lines 108--109
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[5]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[6]
+Overfull \hbox (7.83325pt too wide) in paragraph at lines 113--114
 [][][][][][][] 
  []
 
@@ -454,7 +486,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[5
+[7
 
 ]
 (C:/Users\admin\PycharmProjects\HumanAI\workspace\Ebook_Latex\out\output.aux)
@@ -463,24 +495,24 @@ LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-10-10>
  ***********
 Package rerunfilecheck Info: File `output.out' has not changed.
-(rerunfilecheck)             Checksum: 57FD77931C331F824C80854D22C12D22;742.
+(rerunfilecheck)             Checksum: 7D8ADFF296D92B3C6CC1F86B8114D726;743.
  ) 
 Here is how much of TeX's memory you used:
- 10135 strings out of 474824
- 155115 string characters out of 5760791
- 1932043 words of memory out of 5000000
- 31966 multiletter control sequences out of 15000+600000
+ 10139 strings out of 474824
+ 155147 string characters out of 5760791
+ 1930043 words of memory out of 5000000
+ 31967 multiletter control sequences out of 15000+600000
  563614 words of font info for 54 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,79p,2019b,481s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,12n,79p,1864b,484s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\admin\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
 1200.pk><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/
 Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files
 /MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb>
 Output written on C:/Users\admin\PycharmProjects\HumanAI\workspace\Ebook_Latex\
-out\output.pdf (6 pages, 232732 bytes).
+out\output.pdf (9 pages, 307499 bytes).
 PDF statistics:
- 69 PDF objects out of 1000 (max. 8388607)
- 9 named destinations out of 1000 (max. 500000)
- 30 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 87 PDF objects out of 1000 (max. 8388607)
+ 12 named destinations out of 1000 (max. 500000)
+ 38 words of extra memory for PDF output out of 10000 (max. 10000000)
 

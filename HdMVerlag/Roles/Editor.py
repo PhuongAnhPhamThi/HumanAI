@@ -99,6 +99,8 @@ class Editor(Role):
             msg = Message(content=rslt, role=self.profile, cause_by=type(todo))
             self.rc.memory.add(msg)
             rslt_json = extract_json_from_string(rslt)
+            write_to_txt_file(txt="conversation.txt", actiontype="a", rolle=self.profile, action=self.rc.todo.name,
+                              text=rslt)
             write_to_json_file(jsonfile="ebookInfo.json", key="metadaten", jsonvalue=rslt_json)
             return msg
 
