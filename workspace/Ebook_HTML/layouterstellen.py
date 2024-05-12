@@ -2,7 +2,7 @@ import os
 import json
 from jinja2 import Template
 
-file_path = os.path.join("workspace") + "/"
+file_path = os.path.join("..") + "/"
 
 
 def update_html_from_json():

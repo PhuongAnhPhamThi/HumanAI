@@ -29,3 +29,18 @@ def write_to_json_file(jsonfile: str, jsonvalue, key: str = None):
     # Write JSON data to file
     with open(file_path + "ebookInfo.json", 'w', encoding="utf-8") as file:
         json.dump(existing_data, file, indent=4, ensure_ascii=False)
+
+
+def remove_values_json():
+    file_path = os.path.join("workspace") + "/"
+    with open(file_path + "ebookInfo.json", "r", encoding="utf-8") as f:
+        existing_data = json.load(f)
+    if isinstance(existing_data, dict):
+        for key in existing_data:
+            if isinstance(existing_data[key], dict) or key == "kapiteln" or key == "metadaten":
+                existing_data[key] = {}  # Set value to None
+            elif isinstance(existing_data[key], str):
+                existing_data[key] = ""
+    with open(file_path + "ebookInfo.json", 'w', encoding="utf-8") as file:
+        json.dump(existing_data, file, indent=4, ensure_ascii=False)
+

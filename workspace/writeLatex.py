@@ -48,4 +48,4 @@ def generate_pdf():
     # Compile LaTeX file with specified output directory
     compile_latex('output.tex', output_dir)
 
-# Call the function to generate the PDF
+

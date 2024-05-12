@@ -1,4 +1,3 @@
-\contentsline {section}{\numberline {1} Begegnung unter dem Mond }{3}{section.1}%
-\contentsline {section}{\numberline {2} Verborgene Schätze }{3}{section.2}%
-\contentsline {section}{\numberline {3} Geheimnisse der Vergangenheit }{4}{section.3}%
-\contentsline {section}{\numberline {4} Entscheidungen im Mondschein }{5}{section.4}%
+\contentsline {section}{\numberline {1} Die Entdeckung der verlorenen Magie }{3}{section.1}%
+\contentsline {section}{\numberline {2} Intrigen am königlichen Hof }{3}{section.2}%
+\contentsline {section}{\numberline {3} Der epische Kampf um die Zukunft der Magie }{4}{section.3}%

@@ -29,8 +29,8 @@ def submit_prompt():
     ui_prompt = {
         "genre": ui_genre,
         "gattung": ui_gattung,
-        "tonali": ui_tonali,
-        "kapitel": ui_kapitel
+        "tonalitaet": ui_tonali,
+        "anzahlvonkapitel": ui_kapitel
     }
     ui_prompt = json.dumps(ui_prompt, ensure_ascii=False, indent=2)
     root.quit()  # Stop the mainloop
@@ -93,7 +93,7 @@ def start_ui():  # fur User Input am Anfang
     tonali_label = ctk.CTkLabel(root, text="Lege die Tonalität fest:")
     tonali_label.grid(row=2, column=0)
 
-    tonalis = ["neutrat", "satirisch", "humorvoll", "kindisch", "melancholisch", "mystisch", "spannend", "romantisch"]
+    tonalis = ["neutral", "satirisch", "humorvoll", "kindisch", "melancholisch", "mystisch", "spannend", "romantisch"]
     tonali_combobox = ctk.CTkComboBox(root, values=tonalis)
     tonali_combobox.grid(row=2, column=1)
 

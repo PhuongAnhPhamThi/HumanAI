@@ -1,15 +1,17 @@
-import fire
 import os
+import threading
+
+import fire
 from metagpt.logs import logger
 from metagpt.team import Team
+
 from Roles.Autor import Autor
 from Roles.Editor import Editor
 from Roles.Human_User import Human_User
-from ui.main_ui import start_ui, start_second_ui, start_wait_ui, html_generated  # import start_ui aus ui um UI zu starten
-from runport import start_server
-from workspace.layouterstellen import update_html_from_json
+from ui.main_ui import start_ui, start_wait_ui  # import start_ui aus ui um UI zu starten
+from workspace.Utils.json_handle import remove_values_json
 from workspace.writeLatex import generate_pdf
-import threading
+
 
 # help function for wait UI
 def controlled_start_wait_ui(stop_event):
@@ -34,13 +36,13 @@ ui_prompt = start_ui()
 
 async def main(
 
-        #idea: str = ui_prompt,
-        idea: str = """
+        idea: str = ui_prompt,
+        idea1: str = """
 {
             "genre": "Asian Roman",
             "gattung": "Liebe Geschichte",
             "tonalitaet" : "romantisch",
-            "anzahlvonkapitel":4
+            "anzahlvonkapitel":2
         }
         """,
         investment: float = 0.1,
@@ -54,7 +56,6 @@ async def main(
             Editor(),
             Autor(),
             Human_User(is_human=True),
-            #LayoutDesigner(),
         ]
     )
 
@@ -63,13 +64,10 @@ async def main(
     await team.run(n_round=n_round)
     generate_pdf()
     generate_pdf()
-    #update_html_from_json()
-    #start_server()
 
 
 if __name__ == "__main__":
     with open(os.path.join("workspace") + "/" + "conversation.txt", 'w') as file:
         file.write("")
-
+    remove_values_json()
     fire.Fire(main)
-
