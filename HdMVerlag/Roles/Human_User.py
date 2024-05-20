@@ -1,13 +1,14 @@
-import json
 from metagpt.logs import logger
 from metagpt.roles import Role
 from metagpt.schema import Message
 from Actions.illustrieren import illustrieren
 from Actions.coverKonzipieren import coverKonzipieren
-from Actions.titelEmpfehlen import titelEmpfehlen
-from Actions.titelErstellen import titelErstellen
+from Archive.titelEmpfehlen import titelEmpfehlen
+from Archive.titelErstellen import titelErstellen
 from Actions.konzeptErstellen import konzeptErstellen
-from workspace.Utils.json_handle import extract_json_from_string, write_to_json_file
+from Actions.recherchieren import Recherchieren
+from Actions.ideaEmpfehlen import ideaEmpfehlen
+from workspace.Utils.json_handle import write_to_json_file
 from workspace.Utils.text_handle import write_to_txt_file
 
 
@@ -18,15 +19,15 @@ class Human_User(Role):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.set_actions([titelEmpfehlen, illustrieren])
-        self._watch([titelErstellen, coverKonzipieren, konzeptErstellen])
+        self._watch([titelErstellen, coverKonzipieren, konzeptErstellen,ideaEmpfehlen,Recherchieren])
 
     async def _think(self) -> bool:
 
         last_memory = self.get_memories(k=1)
 
-        if last_memory[0].role == "Editor" and len(self.rc.memory.get_by_action(titelErstellen)) > 0 and len(
-                self.rc.memory.get_by_action(titelEmpfehlen)) == 0:
-            self.set_actions([titelEmpfehlen])
+        if last_memory[0].role == "Editor" and len(self.rc.memory.get_by_action(Recherchieren)) > 0 and len(
+                self.rc.memory.get_by_action(ideaEmpfehlen)) == 0:
+            self.set_actions([ideaEmpfehlen])
             self._set_state(0)
             return True
 
@@ -44,8 +45,8 @@ class Human_User(Role):
         logger.info(f"{self._setting}: to do {self.rc.todo}({self.rc.todo.name})")
         todo = self.rc.todo
 
-        if isinstance(todo, titelEmpfehlen):
-            rslt = await todo.run(titeln=self.rc.memory.get_by_action(titelErstellen)[0].content)
+        if isinstance(todo, ideaEmpfehlen):
+            rslt = await todo.run(ideas=self.rc.memory.get_by_action(Recherchieren)[0].content)
             msg = Message(content=rslt, role=self.profile, cause_by=type(todo))
             self.rc.memory.add(msg)
 

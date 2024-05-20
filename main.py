@@ -11,16 +11,16 @@ from ui.main_ui import start_ui
 from waitingEventHandle import wait_thread
 
 ui_prompt = start_ui()
-wait_thread.start()
+#wait_thread.start()
 
 
 async def main(
 
-        idea: str = ui_prompt,
-        idea1: str = """
+        #idea1: str = ui_prompt,
+        idea: str = """
 {
-            "genre": "Asian Roman",
-            "gattung": "Liebe Geschichte",
+            "genre": "Roman",
+            "thema": "Studentleben",
             "tonalitaet" : "romantisch",
             "anzahlvonkapitel":2
         }
@@ -41,7 +41,7 @@ async def main(
 
     team.invest(investment=investment)
     team.run_project(idea)
-    await team.run(n_round=n_round)
+    #await team.run(n_round=n_round)
     generate_pdf()
     generate_pdf()
 
@@ -49,5 +49,5 @@ async def main(
 if __name__ == "__main__":
     with open(os.path.join("workspace") + "/" + "conversation.txt", 'w') as file:
         file.write("")
-    remove_values_json()
+    #remove_values_json()
     fire.Fire(main)

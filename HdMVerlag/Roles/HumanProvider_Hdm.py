@@ -4,6 +4,7 @@ from metagpt.logs import logger
 from ui.main_ui import start_second_ui, select_title, get_wait_for_title, get_final_title
 from metagpt.provider.human_provider import HumanProvider
 from waitingEventHandle import stop_waitUI
+from waitingEventHandle import wait_thread
 import time
 from Utils.json_handle import extract_json_from_string
 
@@ -29,6 +30,22 @@ class HumanProvider_Hdm_Titel(HumanProvider):
         while get_wait_for_title():  # we need this, to wait for the User to select one title
             time.sleep(1)  # without sleep CPU goes crazy
         rsp = get_final_title()
+        if rsp in ["exit", "quit"]:
+            exit()
+        return rsp
+
+
+class HumanProvider_Hdm_Idea(HumanProvider):
+    """Child class inheriting from HumanProvider with modified ask function"""
+
+    def ask(self, msg: str, timeout=USE_CONFIG_TIMEOUT) -> str:
+        logger.info("Please choose one idea")
+        #select_title(extract_json_from_string(msg))
+        #while get_wait_for_title():  # we need this, to wait for the User to select one title
+        #    time.sleep(1)  # without sleep CPU goes crazy
+        rsp = input(msg)
+        ###wait_thread is vorher in main
+        wait_thread.start()
         if rsp in ["exit", "quit"]:
             exit()
         return rsp

@@ -7,6 +7,9 @@
 \usepackage{fancyhdr} % Headers and footers
 \usepackage{hyperref} % Add hyperlinks
 \usepackage{xcolor} % Color package
+\usepackage[T1]{fontenc} % Proper font encoding
+\usepackage[utf8]{inputenc} % UTF-8 encoding
+\usepackage[ngerman]{babel} % German language support
 
 % Set page margins
 \geometry{a4paper, margin=2.5cm}
@@ -61,9 +64,7 @@
 % Autorenvita
 \section*{Autorenvita}
 \vspace{4cm} % Adjust space between "Autorenvita" and "Inhaltsverzeichnis"
-\begin{minipage}{\textwidth}
-    {{ data.autorenvita }}
-\end{minipage}
+{{ data.autorenvita }}
 
 % Place table of contents on a separate page
 \clearpage
@@ -73,30 +74,25 @@
 % Chapters
 {% for chapter, chapter_data in data.kapiteln.items() %}
 \section{ {{ chapter_data["Kapitel Titel"] }} }
-\begin{minipage}{\textwidth}
-    {{ chapter_data["Kapitel Inhalt"] }}
-\end{minipage}
+{{ chapter_data["Kapitel Inhalt"] }}
 {% endfor %}
 \clearpage
+
 % Metadata
 \section*{Metadaten}
-\begin{minipage}{\textwidth}
-    \colorbox{lightgray}{
-        \begin{minipage}{\dimexpr\textwidth-2\fboxsep}
-            \vspace{4cm}
-            \begin{itemize}
-                \item Name des Buches: {{ data.metadaten["Name des Buches"] }}
-                \item Name des Autors: {{ data.metadaten["Name des Autors"] }}
-                \item Name des Herausgebers: {{ data.metadaten["Name des Herausgebers"] }}
-                \item Name des Verlags: {{ data.metadaten["Name des Verlags"] }}
-                \item Adresse des Verlags: {{ data.metadaten["Adresse des Verlags"] }}
-                \item Datum der Veröffentlichung: {{ data.metadaten["Datum der Veröffentlichung"] }}
-            \end{itemize}
-            \vspace{4cm}
-        \end{minipage}
-
-    }
-\end{minipage}
-
+\colorbox{lightgray}{
+    \begin{minipage}{\dimexpr\textwidth-2\fboxsep}
+        \vspace{1cm}
+        \begin{itemize}
+            \item Name des Buches: {{ data.metadaten["Name des Buches"] }}
+            \item Name des Autors: {{ data.metadaten["Name des Autors"] }}
+            \item Name des Herausgebers: {{ data.metadaten["Name des Herausgebers"] }}
+            \item Name des Verlags: {{ data.metadaten["Name des Verlags"] }}
+            \item Adresse des Verlags: {{ data.metadaten["Adresse des Verlags"] }}
+            \item Datum der Veröffentlichung: {{ data.metadaten["Datum der Veröffentlichung"] }}
+        \end{itemize}
+        \vspace{1cm}
+    \end{minipage}
+}
 
 \end{document}

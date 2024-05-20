@@ -43,13 +43,13 @@ class Autor(Role):
         todo = self.rc.todo
         use_input = extract_json_from_string(self.rc.memory.get_by_action(UserRequirement)[0].content)
         genre = use_input["genre"]
-        gattung = use_input["gattung"]
+        thema = use_input["thema"]
         tonalitaet = use_input["tonalitaet"]
         anzahlvonkapitel = use_input["anzahlvonkapitel"]
 
         if isinstance(todo, allgInfoErstellen):
             context = self.rc.memory.get_by_action(konzeptErstellen)[0].content
-            rslt = await todo.run(context=context, genre=genre, gattung=gattung, tonalitaet=tonalitaet,
+            rslt = await todo.run(context=context, genre=genre, thema=thema, tonalitaet=tonalitaet,
                                   anzahlvonkapitel=anzahlvonkapitel)
             msg = Message(content=rslt, role=self.profile, cause_by=type(todo))
             self.rc.env.publish_message(msg)
@@ -61,7 +61,7 @@ class Autor(Role):
 
         elif isinstance(todo, planErstellen):
             context = self.rc.memory.get_by_action(konzeptErstellen)[0].content
-            rslt = await todo.run(context=context, genre=genre, gattung=gattung, tonalitaet=tonalitaet,
+            rslt = await todo.run(context=context, genre=genre, thema=thema, tonalitaet=tonalitaet,
                                   anzahlvonkapitel=anzahlvonkapitel)
             msg = Message(content=rslt, role=self.profile, cause_by=type(todo))
             self.rc.memory.add(msg)
@@ -73,25 +73,38 @@ class Autor(Role):
         elif isinstance(todo, textErstellenKapitel):
             context1 = self.rc.memory.get_by_action(planErstellen)[0].content
             context_json = extract_json_from_string(context1)
-            number = len(context_json["buchPlan"]["Synopsis pro Kapitel"])
-            for i in range(1, number + 1):
-                if len(self.rc.memory.get_by_action(textErstellenKapitel)) == 0:
-                    rslt = await todo.run(context1=context1, context2="", genre=genre, gattung=gattung,
-                                          tonalitaet=tonalitaet,
-                                          number=i)
-                else:
-                    rslt = await todo.run(context1=context1,
-                                          context2=self.rc.memory.get_by_action(textErstellenKapitel)[0].content,
-                                          genre=genre, gattung=gattung,
-                                          tonalitaet=tonalitaet,
-                                          number=i)
-                msg = Message(content=rslt, role=self.profile, cause_by=type(todo))
-                self.rc.memory.add(msg)
-                # Open file to get current data
-                rslt_json = extract_json_from_string(rslt)
-                write_to_json_file(jsonfile="ebookInfo.json", key="kapiteln", jsonvalue=rslt_json)
+            kapitelnummer = len(context_json["buchPlan"]["Synopsis pro Kapitel"])
+            for i in range(1, kapitelnummer + 1):
+                text = ""
+                for j in range(1, 4):
+                    if len(self.rc.memory.get_by_action(textErstellenKapitel)) == 0:
+                        rslt = await todo.run(context1=context1, context2="", genre=genre, thema=thema,
+                                              tonalitaet=tonalitaet,
+                                              kapitelnummer=i,teilnummer=j)
+                    else:
+                        rslt = await todo.run(context1=context1,
+                                              context2=self.rc.memory.get_by_action(textErstellenKapitel)[0].content,
+                                              genre=genre, thema=thema,
+                                              tonalitaet=tonalitaet,
+                                              kapitelnummer=i,teilnummer=j)
+                    msg = Message(content=rslt, role=self.profile, cause_by=type(todo))
+                    self.rc.memory.add(msg)
+                    rslt_json = extract_json_from_string(rslt)
+                    kapitel_key = list( rslt_json .keys())[0]
+                    teil_key = list( rslt_json[kapitel_key] .keys())[1]
+                    text = text + " " + rslt_json[kapitel_key][teil_key]
+
+
+                    # Open file to get current data
+
+                kapitel_json = {kapitel_key : {
+                        "Kapitel Titel": rslt_json[kapitel_key]["Kapitel Titel"],
+                        "Kapitel Inhalt": text
+                    }},
+
+                write_to_json_file(jsonfile="ebookInfo.json", key="kapiteln", jsonvalue=kapitel_json[0])
                 write_to_txt_file(txt="conversation.txt", actiontype="a", rolle=self.profile, action=self.rc.todo.name,
-                                  text=rslt)
+                                      text=rslt)
             return msg
 
         else:
@@ -100,7 +113,7 @@ class Autor(Role):
     async def _actPlanErstellen(self) -> Message:
         use_input = extract_json_from_string(self.rc.memory.get_by_action(UserRequirement)[0].content)
         genre = use_input["genre"]
-        gattung = use_input["gattung"]
+        thema = use_input["thema"]
         tonalitaet = use_input["tonalitaet"]
         anzahlvonkapitel = use_input["anzahlvonkapitel"]
         todo = self.set_todo(planErstellen())
@@ -108,7 +121,7 @@ class Autor(Role):
         logger.info(todo)
         logger.info(f"{self._setting}: to do {self.rc.todo}({self.rc.todo.name})")
         context = self.rc.memory.get_by_action(konzeptErstellen)[0].content
-        rslt = await todo.run(context=context, genre=genre, gattung=gattung, tonalitaet=tonalitaet,
+        rslt = await todo.run(context=context, genre=genre, thema=thema, tonalitaet=tonalitaet,
                               anzahlvonkapitel=anzahlvonkapitel)
         msg = Message(content=rslt, role=self.profile, cause_by=type(todo))
         self.rc.memory.add(msg)
