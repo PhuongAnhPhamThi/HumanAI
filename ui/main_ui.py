@@ -121,7 +121,7 @@ def start_ui():  # fur User Input am Anfang
     gattung_label = ctk.CTkLabel(root, text="Wähle eine Gattung:")
     gattung_label.grid(row=1, column=0)
 
-    gattungen = ["Prosatext", "Gedicht", "Theaterstück"]
+    gattungen = ["Prosatext (Fließtext)"]
     gattung_combobox = ctk.CTkComboBox(root, values=gattungen)
     gattung_combobox.grid(row=1, column=1)
 
