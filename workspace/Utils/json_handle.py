@@ -9,6 +9,8 @@ def extract_json_from_string(string_with_json):
     # Extract the JSON string
     json_string = string_with_json[start_index:end_index]
     # Load JSON string into dictionary
+    print("json string in Util")
+    print(json_string)
     extracted_json = json.loads(json_string)
 
     return extracted_json

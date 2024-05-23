@@ -10,6 +10,7 @@ from Actions.textErstellenKapitel import textErstellenKapitel
 from workspace.Utils.json_handle import extract_json_from_string, write_to_json_file
 from workspace.Utils.text_handle import write_to_txt_file
 
+finishwriting = 0
 
 class Autor(Role):
     name: str = "Maja Schmidt"
@@ -18,7 +19,7 @@ class Autor(Role):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self._watch([konzeptErstellen, allgInfoErstellen, planErstellen, textErstellenKapitel])
+        self._watch([konzeptErstellen, allgInfoErstellen, planErstellen])
 
     async def _think(self) -> bool:
         last_memory = self.get_memories(k=1)
@@ -71,40 +72,46 @@ class Autor(Role):
             return msg
 
         elif isinstance(todo, textErstellenKapitel):
+            global finishwriting
             context1 = self.rc.memory.get_by_action(planErstellen)[0].content
             context_json = extract_json_from_string(context1)
             kapitelnummer = len(context_json["buchPlan"]["Synopsis pro Kapitel"])
+            text_teil = ""
             for i in range(1, kapitelnummer + 1):
                 text = ""
                 for j in range(1, 4):
-                    if len(self.rc.memory.get_by_action(textErstellenKapitel)) == 0:
+                    if text_teil == "":
                         rslt = await todo.run(context1=context1, context2="", genre=genre, thema=thema,
                                               tonalitaet=tonalitaet,
-                                              kapitelnummer=i,teilnummer=j)
+                                              kapitelnummer=i, teilnummer=j)
+
                     else:
                         rslt = await todo.run(context1=context1,
-                                              context2=self.rc.memory.get_by_action(textErstellenKapitel)[0].content,
+                                              context2=text_teil,
                                               genre=genre, thema=thema,
                                               tonalitaet=tonalitaet,
-                                              kapitelnummer=i,teilnummer=j)
+                                              kapitelnummer=i, teilnummer=j)
+                    text_teil = rslt
                     msg = Message(content=rslt, role=self.profile, cause_by=type(todo))
-                    self.rc.memory.add(msg)
-                    rslt_json = extract_json_from_string(rslt)
-                    kapitel_key = list( rslt_json .keys())[0]
-                    teil_key = list( rslt_json[kapitel_key] .keys())[1]
-                    text = text + " " + rslt_json[kapitel_key][teil_key]
 
+                    rslt_json = extract_json_from_string(rslt)
+                    kapitel_key = list(rslt_json.keys())[0]
+                    teil_key = list(rslt_json[kapitel_key].keys())[1]
+                    text = text + " " + rslt_json[kapitel_key][teil_key]
+                    write_to_txt_file(txt="conversation.txt", actiontype="a", rolle=self.profile,
+                                      action=self.rc.todo.name,
+                                      text=rslt)
 
                     # Open file to get current data
 
-                kapitel_json = {kapitel_key : {
-                        "Kapitel Titel": rslt_json[kapitel_key]["Kapitel Titel"],
-                        "Kapitel Inhalt": text
-                    }},
+                kapitel_json = {kapitel_key: {
+                    "Kapitel Titel": rslt_json[kapitel_key]["Kapitel Titel"],
+                    "Kapitel Inhalt": text
+                }},
 
                 write_to_json_file(jsonfile="ebookInfo.json", key="kapiteln", jsonvalue=kapitel_json[0])
-                write_to_txt_file(txt="conversation.txt", actiontype="a", rolle=self.profile, action=self.rc.todo.name,
-                                      text=rslt)
+            finishwriting = 1
+            self.rc.env.publish_message(msg)
             return msg
 
         else:

@@ -22,7 +22,7 @@ async def main(
             "genre": "Roman",
             "thema": "Studentleben",
             "tonalitaet" : "romantisch",
-            "anzahlvonkapitel":2
+            "anzahlvonkapitel":5
         }
         """,
         investment: float = 0.1,
@@ -41,7 +41,7 @@ async def main(
 
     team.invest(investment=investment)
     team.run_project(idea)
-    #await team.run(n_round=n_round)
+    await team.run(n_round=n_round)
     generate_pdf()
     generate_pdf()
 
@@ -49,5 +49,5 @@ async def main(
 if __name__ == "__main__":
     with open(os.path.join("workspace") + "/" + "conversation.txt", 'w') as file:
         file.write("")
-    #remove_values_json()
+    remove_values_json()
     fire.Fire(main)

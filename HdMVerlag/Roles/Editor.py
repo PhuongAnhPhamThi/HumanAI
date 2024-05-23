@@ -14,6 +14,7 @@ from Actions.textErstellenKapitel import textErstellenKapitel
 from Actions.allgInfoErstellen import allgInfoErstellen
 from Actions.ideaEmpfehlen import ideaEmpfehlen
 from Actions.konzeptVorbereiten import konzeptVorbereiten
+from Actions.textKorrigieren import textKorrigieren
 from workspace.Utils.json_handle import extract_json_from_string, write_to_json_file
 from workspace.Utils.text_handle import write_to_txt_file
 
@@ -25,8 +26,8 @@ class Editor(Role):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._watch(
-            [UserRequirement, Recherchieren, konzeptErstellen, titelErstellen, titelEmpfehlen, textErstellenKapitel,
-             illustrieren, coverKonzipieren, planErstellen, metadatenZusammenfassen, ideaEmpfehlen])
+            [UserRequirement, Recherchieren, konzeptErstellen, titelErstellen, titelEmpfehlen,
+             illustrieren, coverKonzipieren, metadatenZusammenfassen, ideaEmpfehlen,textKorrigieren])
 
     async def _think(self) -> bool:
 
@@ -47,12 +48,14 @@ class Editor(Role):
             self._set_state(0)
             return True
 
-        elif last_memory[0].role == "Autor" and len(self.rc.memory.get_by_action(textErstellenKapitel)) > 0:
+        elif last_memory[0].role == "Human_User" and len(self.rc.memory.get_by_action(textKorrigieren)) > 0 and len(
+                self.rc.memory.get_by_action(coverKonzipieren)) == 0:
             self.set_actions([coverKonzipieren])
             self._set_state(0)
             return True
 
-        elif last_memory[0].role == "Human_User" and len(self.rc.memory.get_by_action(illustrieren)) > 0:
+        elif last_memory[0].role == "Human_User" and len(self.rc.memory.get_by_action(illustrieren)) > 0 and len(
+                self.rc.memory.get_by_action(metadatenZusammenfassen)) == 0:
             self.set_actions([metadatenZusammenfassen])
             self._set_state(0)
             return True

@@ -20,7 +20,7 @@ Wenn du eine fiktive Welt erschaffst, beschreibe auch diese Welt, ausdenke und b
 ## Ausdenke und entwickle vier passende Charaktere mit Namen und skizziere ihre Hintergrundgeschichten und Entwicklungen im Laufe des Buches.
 
 ## Ausdenke und schreibe eine Synopsis für jedes Kapitell basierend auf dem Inhaltsverzeichnis. Wichtig: Jedes Kapitel muss aus drei Teilen bestehen. Du muss auch 3 kleine Synopsen für 3 Teile erstellen. 3 kleine Synopsen müssen mit einander logisch verbunden und bleiben die Synopsis des Kapitels. Alle oben beschriebenen Charaktere müssen einbezogen werden. Sei kreativ und schaffe dramatische Wendungen in der Handlung. Es sollte eine kohärente und vollständige Geschichte sein. Du bist nicht berechtigt, zusätzliche Kapitel hinzuzufügen oder das Inhaltsverzeichnis zu ändern."
-#Output: Gib json ```json your_code_here ``` ohne andere Texte zurück (Beachten!!! Kein Syntax Fehler im JSON format):
+#Output: Gib json ```json your_code_here ``` ohne andere Texte zurück (Beachten!!! Kein Syntax Fehler im JSON format, kein Anführungszeichen in string):
 {{buchPlan:
 {{
     "Hauptthemen und Ideen": "",
