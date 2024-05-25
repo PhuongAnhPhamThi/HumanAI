@@ -13,6 +13,13 @@ def download_image(image_url, output_path):
     else:
         print("Failed to download the image.")
 
+def escape_latex(s):
+    # Function to escape LaTeX special characters
+    return s.replace('&', r'\&').replace('%', r'\%').replace('$', r'\$').replace('#', r'\#').replace('_',
+                                                                                                     r'\_').replace(
+        '{', r'\{').replace('}', r'\}').replace('~', r'\textasciitilde{}').replace('^', r'\^{}').replace('\\',
+                                                                                                         r'')
+
 def generate_pdf():
     def compile_latex(tex_file, output_dir):
         subprocess.run(['pdflatex', '-output-directory=' + output_dir, tex_file], cwd=file_path_latex)
@@ -24,6 +31,10 @@ def generate_pdf():
     # Load JSON data
     with open('workspace/ebookInfo.json') as f:
         data = json.load(f)
+
+    # Escape special characters in JSON data
+    data = {k: escape_latex(v) if isinstance(v, str) else v for k, v in data.items()}
+    data['kapiteln'] = {k: {sub_k: escape_latex(sub_v) if isinstance(sub_v, str) else sub_v for sub_k, sub_v in sub_v.items()} for k, sub_v in data['kapiteln'].items()}
 
     # Download cover image
     download_image(data['cover_link'], os.path.join(file_path_latex, "cover.jpg"))
@@ -48,4 +59,5 @@ def generate_pdf():
     # Compile LaTeX file with specified output directory
     compile_latex('output.tex', output_dir)
 
-
+if __name__ == "__main__":
+    generate_pdf()

@@ -1,6 +1,3 @@
 \babel@toc {ngerman}{}\relax 
-\contentsline {section}{\numberline {1} Neue Anfänge }{3}{section.1}%
-\contentsline {section}{\numberline {2} Liebe im Uni-Alltag }{4}{section.2}%
-\contentsline {section}{\numberline {3} Herausforderungen und Überwindungen }{6}{section.3}%
-\contentsline {section}{\numberline {4} Erfolge und Feiern }{7}{section.4}%
-\contentsline {section}{\numberline {5} Abschied und Neuanfang }{9}{section.5}%
+\contentsline {section}{\numberline {1} Die magische Landkarte }{3}{section.1}%
+\contentsline {section}{\numberline {2} Abenteuer auf dem Chaos-Kontinent }{6}{section.2}%

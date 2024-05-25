@@ -7,7 +7,7 @@ from Actions.konzeptErstellen import konzeptErstellen
 from Actions.allgInfoErstellen import allgInfoErstellen
 from Actions.planErstellen import planErstellen
 from Actions.textErstellenKapitel import textErstellenKapitel
-from workspace.Utils.json_handle import extract_json_from_string, write_to_json_file
+from workspace.Utils.json_handle import extract_json_from_string, write_to_json_file,extract_json_from_string_inhalt
 from workspace.Utils.text_handle import write_to_txt_file
 
 finishwriting = 0
@@ -94,7 +94,7 @@ class Autor(Role):
                     text_teil = rslt
                     msg = Message(content=rslt, role=self.profile, cause_by=type(todo))
 
-                    rslt_json = extract_json_from_string(rslt)
+                    rslt_json = extract_json_from_string_inhalt(rslt)
                     kapitel_key = list(rslt_json.keys())[0]
                     teil_key = list(rslt_json[kapitel_key].keys())[1]
                     text = text + " " + rslt_json[kapitel_key][teil_key]

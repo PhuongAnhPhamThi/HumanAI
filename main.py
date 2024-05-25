@@ -19,13 +19,13 @@ async def main(
         #idea1: str = ui_prompt,
         idea: str = """
 {
-            "genre": "Roman",
-            "thema": "Studentleben",
-            "tonalitaet" : "romantisch",
-            "anzahlvonkapitel":5
+            "genre": "Kinderbuch",
+            "thema": "Mädchen, die die Welt erkundet",
+            "tonalitaet" : "lüstig ",
+            "anzahlvonkapitel":2
         }
         """,
-        investment: float = 0.1,
+        investment: float = 1,
         n_round: int = 15,
 ):
     logger.info(idea)

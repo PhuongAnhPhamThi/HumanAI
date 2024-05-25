@@ -1,6 +1,25 @@
 import json
 import os
+from workspace.Utils.text_handle import write_to_txt_file_simple, read_from_txt_file
 
+
+def extract_json_from_string_inhalt(string_with_json):
+    write_to_txt_file_simple(txt="json.txt", actiontype="w", text=string_with_json)
+    string_with_json1 = read_from_txt_file(txt="json.txt", actiontype="r")
+    start_index = string_with_json1.find('{')
+    end_index = string_with_json1.rfind('}') + 1
+
+    json_string = string_with_json1[start_index:end_index]
+
+    inhalt_str = json_string[json_string.index("Kapitel Inhalt Teil")+25:json_string.rfind('"')]
+    #escaped_str = inhalt_str.replace('\"', "'").replace('"', "'").replace('\\', '').replace('\n', '').replace('\t','').replace("\'", '').replace("/", '')
+    escaped_str = inhalt_str.replace('\"', "'").replace('\\', '').replace('\t', '').replace('"', "'")
+    full_str = json_string[:json_string.index("Kapitel Inhalt Teil")+25] + escaped_str + json_string[json_string.rfind('"'):]
+    print("full_str")
+    print(full_str)
+    extracted_json = json.loads(full_str, strict=False)
+
+    return extracted_json
 
 def extract_json_from_string(string_with_json):
     start_index = string_with_json.find('{')
@@ -9,9 +28,7 @@ def extract_json_from_string(string_with_json):
     # Extract the JSON string
     json_string = string_with_json[start_index:end_index]
     # Load JSON string into dictionary
-    print("json string in Util")
-    print(json_string)
-    extracted_json = json.loads(json_string)
+    extracted_json = json.loads(json_string,strict=False)
 
     return extracted_json
 
@@ -45,4 +62,3 @@ def remove_values_json():
                 existing_data[key] = ""
     with open(file_path + "ebookInfo.json", 'w', encoding="utf-8") as file:
         json.dump(existing_data, file, indent=4, ensure_ascii=False)
-

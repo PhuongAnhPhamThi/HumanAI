@@ -11,7 +11,7 @@ from Actions.ideaEmpfehlen import ideaEmpfehlen
 from Actions.textKorrigieren import textKorrigieren
 from Actions.textErstellenKapitel import textErstellenKapitel
 from Autor import finishwriting
-from workspace.Utils.json_handle import write_to_json_file, extract_json_from_string
+from workspace.Utils.json_handle import write_to_json_file, extract_json_from_string, extract_json_from_string_inhalt
 from workspace.Utils.text_handle import write_to_txt_file
 import os
 import json
