@@ -16,12 +16,12 @@ geometry = "640x400"
 def submit_prompt():
     global ui_prompt  # Use global to modify the global variables
     ui_genre = genre_combobox.get()  # Get the selected genre from the combobox
-    ui_gattung = gattung_combobox.get()  # Get the selected gattung from the combobox
+    ui_thema = thema_entry.get()  # Get the selected gattung from the combobox
     ui_tonali = tonali_combobox.get()
     ui_kapitel = kapitel_combobox.get()
     ui_prompt = {
         "genre": ui_genre,
-        "gattung": ui_gattung,
+        "thema": ui_thema,
         "tonalitaet": ui_tonali,
         "anzahlvonkapitel": ui_kapitel
     }
@@ -102,8 +102,14 @@ def html_generated():
     continue_button.pack()
 
 
+def change_thema_entry():
+    thema = thema_combobox.get()
+    thema_entry.delete(0, ctk.END)
+    thema_entry.insert(0, thema)
+
+
 def start_ui():  # fur User Input am Anfang
-    global root, genre_combobox, gattung_combobox, tonali_combobox, kapitel_combobox
+    global root, genre_combobox, tonali_combobox, kapitel_combobox, thema_combobox, thema_entry
     root = ctk.CTk()
     root.title("E-Book Generator")
     root.geometry(geometry)
@@ -112,38 +118,44 @@ def start_ui():  # fur User Input am Anfang
     genre_label = ctk.CTkLabel(root, text="Entscheide dich für ein Genre:")
     genre_label.grid(row=0, column=0)
 
-    genres = ["Fantasy", "Thriller", "Horror", "Liebesroman", "Krimi", "Utopie", "Western", "Kinderbuch",
-              "Science Fiction", "Steampunk", "Gesellschaftsroman"]
+    genres = ["Fantasy", "Thriller", "Horror", "Liebesroman", "Historischer Roman", "Krimi", "Utopie", "Western",
+              "Kinderbuch", "Science Fiction", "Steampunk", "Gesellschaftsroman"]
     genre_combobox = ctk.CTkComboBox(root, values=genres)
     genre_combobox.grid(row=0, column=1)
 
-    # Gattung selection
-    gattung_label = ctk.CTkLabel(root, text="Wähle eine Gattung:")
-    gattung_label.grid(row=1, column=0)
+    # Thema selection
+    thema_label = ctk.CTkLabel(root, text="Gib das ein Thema an:")
+    thema_label.grid(row=1, column=0)
 
-    gattungen = ["Prosatext (Fließtext)"]
-    gattung_combobox = ctk.CTkComboBox(root, values=gattungen)
-    gattung_combobox.grid(row=1, column=1)
+    themen = ["Studentenleben", "Zauberland", "Piraten", "Parallelwelt", "Viktorianisches England", "Unbewohnte Insel",
+              "Welt von Game of Thrones", "Altes Ägypten", "Stadt der Zukunft", "Archäologische Expedition",
+              "Moderne Großstadt", "Psychatrische Klinik", "Postapokalyptische Wüste", "Raumschiff",
+              "Everest Besteigung"]
+    thema_combobox = ctk.CTkComboBox(root, values=themen, command=change_thema_entry)
+    thema_combobox.grid(row=1, column=1)
+    thema_entry = ctk.CTkEntry(root)
+    thema_entry.grid(row=2, column=0, columnspan=2)
 
     # Tonalität selection
     tonali_label = ctk.CTkLabel(root, text="Lege die Tonalität fest:")
-    tonali_label.grid(row=2, column=0)
+    tonali_label.grid(row=3, column=0)
 
-    tonalis = ["neutral", "satirisch", "humorvoll", "kindisch", "melancholisch", "mystisch", "spannend", "romantisch"]
+    tonalis = ["neutral", "satirisch", "humorvoll", "kindisch", "gruselig", "melancholisch", "mystisch", "spannend",
+               "romantisch"]
     tonali_combobox = ctk.CTkComboBox(root, values=tonalis)
-    tonali_combobox.grid(row=2, column=1)
+    tonali_combobox.grid(row=3, column=1)
 
     # Anzahl Kapitel selection
     kapitel_label = ctk.CTkLabel(root, text="Anzahl der Kapitel:")
-    kapitel_label.grid(row=3, column=0)
+    kapitel_label.grid(row=4, column=0)
 
     kapitel = ["3", "4", "5", "6", "7", "8", "9"]
     kapitel_combobox = ctk.CTkComboBox(root, values=kapitel)
-    kapitel_combobox.grid(row=3, column=1)
+    kapitel_combobox.grid(row=4, column=1)
 
     # Generate button
     generate_button = ctk.CTkButton(root, text="E-Book generieren", command=submit_prompt)
-    generate_button.grid(row=4, column=1)
+    generate_button.grid(row=5, column=1)
 
     root.mainloop()
     return ui_prompt  # Return the selections after the UI has closed
@@ -195,14 +207,17 @@ def start_second_ui(prompt):  # für book cover
     copilot_button.grid(row=1, column=1)
 
     # Weiterleitung zu Imgbb
+    """
     imgbb_label = ctk.CTkLabel(cover, text="Lade das online hoch, wir empfehlen imgbb")
     imgbb_label.grid(row=2, column=0)
     imgbb_button = ctk.CTkButton(cover, text="Zu imgbb", command=lambda: open_url("https://de.imgbb.com/"))
     imgbb_button.grid(row=2, column=1)
+    """
 
     second_root.mainloop()
 
     return saved_link
+
 
 def start_wait_ui(stop_event):
     while not stop_event.is_set():
@@ -215,6 +230,7 @@ def start_wait_ui(stop_event):
         wait_label.pack()
 
         wait_root.mainloop()
+
 
 # This allows the module to be imported without immediately running the UI
 if __name__ == "__main__":
