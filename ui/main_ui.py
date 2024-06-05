@@ -48,21 +48,21 @@ def open_url(url):
 
 def select_title(title_json):
     set_wait_for_title(True)
-    #title_dict = json.loads(title_json)
-    title_dict = title_json
+    title_dict = json.loads(title_json)
+    print(title_dict)
     wait_label.configure(text="Wählen Sie einen der folgenden Titel für Ihr Ebook:")
     global titel_textbox, titel_combobox, titel_button
-    titel_text = f"""
-    1. {title_dict["1"]}
-    2. {title_dict["2"]}
-    3. {title_dict["3"]}
-    4. {title_dict["4"]}
-    5. {title_dict["5"]}"""
-    titel_textbox = ctk.CTkTextbox(wait_root, wrap="word")
+    titel_text = str()
+    titel_nums = list()
+    for idea in title_dict:
+        titel_nums.append(idea)
+        idea_text = f"{idea}:\n {title_dict[idea]["Titel"]}\n {title_dict[idea]["Idea"]}\n"
+        titel_text = titel_text + idea_text
+        print(titel_text)
+    titel_textbox = ctk.CTkTextbox(wait_root, wrap="word", width=800)
     titel_textbox.pack()
     titel_textbox.insert(ctk.END, titel_text)
     titel_textbox.configure(state="disabled")
-    titel_nums = ["1", "2", "3", "4", "5"]
     titel_combobox = ctk.CTkComboBox(wait_root, values=titel_nums)
     titel_combobox.pack()
     titel_button = ctk.CTkButton(wait_root, text="Weiter", command=lambda: delete_title_elements(title_dict[titel_combobox.get()]))
@@ -74,7 +74,8 @@ def delete_title_elements(final_title):
     titel_textbox.destroy()
     titel_combobox.destroy()
     titel_button.destroy()
-    set_final_title(final_title)
+    final_title_string = f"Titel: {final_title["Titel"]}\nIdea: {final_title["Idea"]}"
+    set_final_title(final_title_string)
     set_wait_for_title(False)
 
 
