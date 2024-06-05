@@ -102,14 +102,13 @@ def html_generated():
     continue_button.pack()
 
 
-def change_thema_entry():
-    thema = thema_combobox.get()
+def change_thema_entry(thema):
     thema_entry.delete(0, ctk.END)
     thema_entry.insert(0, thema)
 
 
 def start_ui():  # fur User Input am Anfang
-    global root, genre_combobox, tonali_combobox, kapitel_combobox, thema_combobox, thema_entry
+    global root, genre_combobox, tonali_combobox, kapitel_combobox, thema_entry
     root = ctk.CTk()
     root.title("E-Book Generator")
     root.geometry(geometry)
@@ -133,7 +132,7 @@ def start_ui():  # fur User Input am Anfang
               "Everest Besteigung"]
     thema_combobox = ctk.CTkComboBox(root, values=themen, command=change_thema_entry)
     thema_combobox.grid(row=1, column=1)
-    thema_entry = ctk.CTkEntry(root)
+    thema_entry = ctk.CTkEntry(root, width=310)
     thema_entry.grid(row=2, column=0, columnspan=2)
 
     # Tonalität selection
