@@ -11,15 +11,17 @@ def extract_json_from_string_inhalt(string_with_json):
 
     json_string = string_with_json1[start_index:end_index]
 
-    inhalt_str = json_string[json_string.index("Kapitel Inhalt Teil")+25:json_string.rfind('"')]
-    #escaped_str = inhalt_str.replace('\"', "'").replace('"', "'").replace('\\', '').replace('\n', '').replace('\t','').replace("\'", '').replace("/", '')
+    inhalt_str = json_string[json_string.index("Kapitel Inhalt Teil") + 25:json_string.rfind('"')]
+    # escaped_str = inhalt_str.replace('\"', "'").replace('"', "'").replace('\\', '').replace('\n', '').replace('\t','').replace("\'", '').replace("/", '')
     escaped_str = inhalt_str.replace('\"', "'").replace('\\', '').replace('\t', '').replace('"', "'")
-    full_str = json_string[:json_string.index("Kapitel Inhalt Teil")+25] + escaped_str + json_string[json_string.rfind('"'):]
+    full_str = json_string[:json_string.index("Kapitel Inhalt Teil") + 25] + escaped_str + json_string[
+                                                                                           json_string.rfind('"'):]
     print("full_str")
     print(full_str)
     extracted_json = json.loads(full_str, strict=False)
 
     return extracted_json
+
 
 def extract_json_from_string(string_with_json):
     start_index = string_with_json.find('{')
@@ -27,8 +29,10 @@ def extract_json_from_string(string_with_json):
 
     # Extract the JSON string
     json_string = string_with_json[start_index:end_index]
+    print("json_string")
+    print(json_string)
     # Load JSON string into dictionary
-    extracted_json = json.loads(json_string,strict=False)
+    extracted_json = json.loads(json_string, strict=False)
 
     return extracted_json
 

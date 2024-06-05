@@ -39,16 +39,10 @@ class HumanProvider_Hdm_Idea(HumanProvider):
     """Child class inheriting from HumanProvider with modified ask function"""
 
     def ask(self, msg: str, timeout=USE_CONFIG_TIMEOUT) -> str:
-        logger.info("Please choose one idea")
-        wait_thread.start()
-        # select_title(extract_json_from_string(msg))
-        # while get_wait_for_title():  # we need this, to wait for the User to select one title
-        #    time.sleep(1)  # without sleep CPU goes crazy
-        rsp = input(msg)
-        rsp1 = """Idea 5": {
-    "Titel": "Die verschwundenen Studenten",
-    "Idea": "Eine Reihe von mysteriösen Verschwinden von Studenten auf dem Campus führt zu einer gruseligen Enthüllung über eine verborgene Gefahr, die das Studentenleben bedroht."
-  }"""
+        select_title(extract_json_from_string(msg))
+        while get_wait_for_title():  # we need this, to wait for the User to select one title
+            time.sleep(1)  # without sleep CPU goes crazy
+        rsp = get_final_title()
         if rsp in ["exit", "quit"]:
             exit()
         return rsp

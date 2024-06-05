@@ -11,18 +11,19 @@ from ui.main_ui import start_ui
 from waitingEventHandle import wait_thread
 
 ui_prompt = start_ui()
-#wait_thread.start()
+print(ui_prompt)
+wait_thread.start()
 
 
 async def main(
 
-        #idea1: str = ui_prompt,
-        idea: str = """
+        idea: str = ui_prompt,
+        idea1: str = """
 {
             "genre": "Kinderbuch",
             "thema": "Mädchen, die die Welt erkundet",
             "tonalitaet" : "lüstig ",
-            "anzahlvonkapitel":2
+            "anzahlvonkapitel":9
         }
         """,
         investment: float = 1,

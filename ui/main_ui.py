@@ -3,7 +3,8 @@ from tkinter import ttk
 import json
 import webbrowser
 import os
-#from workspace.verbindung import set_link_coverEbook
+
+# from workspace.verbindung import set_link_coverEbook
 
 # note to Konrad: in the main function start_second_ui(prompt) i give prompt directly through parameter "prompt". you
 # dont need to import anything or write a extra func to save the prompt.
@@ -12,6 +13,7 @@ ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
 
 geometry = "640x400"
+
 
 def submit_prompt():
     global ui_prompt  # Use global to modify the global variables
@@ -48,15 +50,16 @@ def open_url(url):
 
 def select_title(title_json):
     set_wait_for_title(True)
-    title_dict = json.loads(title_json)
+    # title_dict = json.loads(title_json,strict=False)
+    title_dict = title_json
     print(title_dict)
-    wait_label.configure(text="Wählen Sie einen der folgenden Titel für Ihr Ebook:")
+    wait_label.configure(text="Wählen Sie einen der folgenden Titel und Idee für Ihr Ebook:")
     global titel_textbox, titel_combobox, titel_button
     titel_text = str()
     titel_nums = list()
     for idea in title_dict:
         titel_nums.append(idea)
-        idea_text = f"{idea}:\n {title_dict[idea]["Titel"]}\n {title_dict[idea]["Idea"]}\n"
+        idea_text = f'{idea}:\n {title_dict[idea]["Titel"]}\n {title_dict[idea]["Idea"]}\n'
         titel_text = titel_text + idea_text
         print(titel_text)
     titel_textbox = ctk.CTkTextbox(wait_root, wrap="word", width=800)
@@ -65,7 +68,8 @@ def select_title(title_json):
     titel_textbox.configure(state="disabled")
     titel_combobox = ctk.CTkComboBox(wait_root, values=titel_nums)
     titel_combobox.pack()
-    titel_button = ctk.CTkButton(wait_root, text="Weiter", command=lambda: delete_title_elements(title_dict[titel_combobox.get()]))
+    titel_button = ctk.CTkButton(wait_root, text="Weiter",
+                                 command=lambda: delete_title_elements(title_dict[titel_combobox.get()]))
     titel_button.pack()
 
 
@@ -74,7 +78,7 @@ def delete_title_elements(final_title):
     titel_textbox.destroy()
     titel_combobox.destroy()
     titel_button.destroy()
-    final_title_string = f"Titel: {final_title["Titel"]}\nIdea: {final_title["Idea"]}"
+    final_title_string = f'Titel: {final_title["Titel"]}\nIdea: {final_title["Idea"]}'
     set_final_title(final_title_string)
     set_wait_for_title(False)
 
@@ -183,7 +187,7 @@ def start_second_ui(prompt):  # für book cover
     cover_link = ctk.CTkFrame(second_root, width=400)
     cover_link.pack()
     cover_link_label = ctk.CTkLabel(cover_link,
-                                text="Kopiere jetzt den Embed-Code HTML (Vollansicht-Link) und füge ihn hier ein:")
+                                    text="Kopiere jetzt den Embed-Code HTML (Vollansicht-Link) und füge ihn hier ein:")
     cover_link_label.grid(row=0, column=0)
     cover_link_entry = ctk.CTkEntry(cover_link, width=500)
     cover_link_entry.grid(row=1, column=0, sticky="w")
@@ -203,7 +207,8 @@ def start_second_ui(prompt):  # für book cover
     # Weiterleitung zu Bing Copilot
     copilot_label = ctk.CTkLabel(cover, text="Wir empfehlen dafür den Bing Copilot zu verwenden.")
     copilot_label.grid(row=1, column=0)
-    copilot_button = ctk.CTkButton(cover, text="Zu Copilot", command=lambda: open_url("https://www.bing.com/images/create"))
+    copilot_button = ctk.CTkButton(cover, text="Zu Copilot",
+                                   command=lambda: open_url("https://www.bing.com/images/create"))
     copilot_button.grid(row=1, column=1)
 
     # Weiterleitung zu Imgbb
@@ -234,8 +239,8 @@ def start_wait_ui(stop_event):
 
 # This allows the module to be imported without immediately running the UI
 if __name__ == "__main__":
-    #start_ui()
+    # start_ui()
     start_second_ui()
-    #link = start_second_ui("Prompt text")
-    #print("Link entered:", link)
-    #start_wait_ui(stop_event=None)
+    # link = start_second_ui("Prompt text")
+    # print("Link entered:", link)
+    # start_wait_ui(stop_event=None)

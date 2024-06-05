@@ -122,23 +122,24 @@ str2 = """
 """
 # extract_json_from_string(str2)
 test = """
-    {
-  "Kapitel 1": {
-    "Kapitel Titel": "Das Einzugsgespenst",
-    "Kapitel Inhalt Teil 1": "Lena Müller zog ihren Koffer die knarrende Treppe des alten Studentenwohnheims hinauf. 
-    Die Wände waren mit verblassten Postern und vergilbten Fotos bedeckt, die Geschichten aus vergangenen Jahrzehnten erzählten. Sie konnte die Aufregung kaum verbergen, als sie die Tür zu ihrem neuen Zimmer öffnete. Es war klein, aber gemütlich, mit einem großen Fenster, das auf die historische Altstadt Heidelbergs blickte.\n\n„Willkommen im Gruselhaus“, sagte eine Stimme hinter ihr. Lena drehte sich um und sah einen jungen Mann mit zerzaustem Haar und einem breiten Grinsen. „Ich bin Max. Informatikstudent und dein neuer Nachbar.“\n\n„Lena“, antwortete sie lächelnd. „Literaturstudentin. Was meinst du mit Gruselhaus?“\n\n„Oh, das wirst du schon noch herausfinden“, sagte Max geheimnisvoll. „Komm, ich stelle dir die anderen vor.“\n\nIm Gemeinschaftsraum traf Lena auf Sophie, eine zierliche Kunststudentin mit langen, dunklen Haaren, und David, einen ernst dreinblickenden Geschichtsstudenten, der in einem alten Buch blätterte.\n\n„Hast du schon von Zimmer 13 gehört?“ fragte Sophie leise, als sie sich setzten.\n\n„Zimmer 13?“ wiederholte Lena neugierig.\n\n„Es steht seit Jahren leer“, erklärte David, ohne von seinem Buch aufzusehen. „Es gibt Gerüchte, dass es dort spukt.“\n\n„Ach, das sind doch nur Geschichten“, sagte Max abwinkend. „Aber es gibt schon seltsame Dinge, die hier passieren.“\n\n„Wie was?“ fragte Lena, ihre Neugier geweckt.\n\n„Flackernde Lichter, seltsame Geräusche“, zählte Sophie auf. „Manchmal hört man Schritte, obwohl niemand da ist.“\n\n„Und das alles in Zimmer 13?“ fragte Lena.\n\n„Nicht nur dort“, sagte David und schloss sein Buch. „Aber es scheint der Ursprung zu sein.“\n\nIn dieser Nacht konnte Lena kaum schlafen. Sie lag wach und lauschte auf jedes Geräusch. Plötzlich flackerte das Licht in ihrem Zimmer, und sie hörte ein leises Klopfen an der Wand. Ihr Herz schlug schneller, und sie setzte sich auf. War das nur Einbildung?\n\nAm nächsten Morgen trafen sich die vier im Café um die Ecke. „Ich habe gestern Nacht etwas Seltsames gehört“, begann Lena zögernd.\n\n„Ich auch“, sagte Sophie. „Es klang, als ob jemand an meine Tür klopfte.“\n\n„Vielleicht sollten wir Nachforschungen anstellen“, schlug David vor. „Es muss doch eine Erklärung geben.“\n\n„Ich bin dabei“, sagte Max, obwohl er skeptisch wirkte. „Aber nur, um zu beweisen, dass es keine Geister gibt.“\n\nDie Gruppe beschloss, in der Bibliothek nach alten Dokumenten über das Wohnheim zu suchen. Sie fanden Zeitungsartikel und alte Pläne des Gebäudes, die auf ein dunkles Geheimnis hinwiesen. Es gab Berichte über ein mysteriöses Verschwinden eines Studenten vor vielen Jahren, und alle Spuren führten zu Zimmer 13.\n\n„Das wird ja immer interessanter“, sagte Lena, als sie die alten Dokumente durchblätterte. „Wir müssen herausfinden, was damals passiert ist.“\n\n„Und warum es immer noch spukt“, fügte Sophie hinzu.\n\n„Lasst uns heute Abend zurück ins Wohnheim gehen und weiterforschen“, schlug David vor. „Vielleicht finden wir noch mehr Hinweise.“\n\nDie Gruppe war sich einig. Sie wussten, dass sie auf etwas Großes gestoßen waren, und waren entschlossen, das Geheimnis von Zimmer 13 zu lüften."
+    
+{
+  "Kapitel 8": {
+    "Kapitel Titel": "Das geheimnisvolle Unterwasserreich",
+    "Kapitel Inhalt Teil 3": "Clara, Leo und Yuki standen am Ufer und schauten auf das glitzernde Meer zurück. Die schimmernde Muschel in Claras Hand funkelte im Sonnenlicht. 'Ich kann es kaum glauben, dass wir das alles erlebt haben,' sagte Clara und strich über die Muschel. 'Es war wirklich ein unglaubliches Abenteuer.'\n\nLeo nickte und schüttelte erneut das Wasser aus seinem Fell. 'Und ich dachte, der Dschungel wäre aufregend! Aber das hier war etwas ganz Besonderes.'\n\nYuki, der Roboter, dessen Sensoren immer noch leicht blinkten, fügte hinzu: 'Die Daten, die ich gesammelt habe, sind von unschätzbarem Wert. Aber die Erinnerungen sind noch wertvoller.'\n\nClara lächelte und sah zu Marina, die ihnen vom Wasser aus zuwinkte. 'Danke, Marina. Ohne dich hätten wir das nie geschafft.'\n\nMarina lächelte zurück. 'Es war mir eine Freude, euch zu helfen. Ihr seid immer willkommen in unserem Reich. Passt gut auf euch auf und vergesst nicht, dass wahre Schätze nicht immer aus Gold und Edelsteinen bestehen.'\n\nClara nickte. 'Das werde ich nie vergessen. Freundschaft und Abenteuer sind die größten Schätze.'\n\nMit einem letzten Winken tauchte Marina zurück in die Tiefen des Ozeans. Clara, Leo und Yuki drehten sich um und gingen zum magischen Globus, der am Strand auf sie wartete.\n\n'Bereit für das nächste Abenteuer?' fragte Clara und legte ihre Hand auf den Globus.\n\nLeo grinste. 'Immer bereit!'\n\nYuki nickte. 'Lasst uns sehen, wohin er uns als nächstes führt.'\n\nMit einem leuchtenden Strahlen aktivierte sich der Globus, und in einem Augenblick wurden sie in ein neues Abenteuer teleportiert. Clara hielt die schimmernde Muschel fest in ihrer Hand und wusste, dass sie diese Reise nie vergessen würde. Neue Abenteuer warteten auf sie, und sie war bereit, die Welt weiter zu erkunden."
   }
 }"""
 
 
 
 
+
+escaped_str = test.replace('\"', "'").replace('\\', '').replace('\t', '').replace('"', "'")
 # extract_json_from_string(test)
-escaped_str = test.replace('\\', '').replace('\t', '\\t')
+#escaped_str = test.replace('\\', '').replace('\t', '\\t')
 #print(test.index("Kapitel Inhalt Teil"))
 #print(test[test.index("Kapitel Inhalt Teil")+25])
-print(test.rfind('"') + 1)
-print(test[3249:3253])
+
 json=extract_json_from_string(test)
 def get_all_keys(d, keys_set=None):
     if keys_set is None:
@@ -150,3 +151,4 @@ def get_all_keys(d, keys_set=None):
     return keys_set
 
 print(get_all_keys(json))
+print(escaped_str)

@@ -94,7 +94,7 @@ class Autor(Role):
                     text_teil = rslt
                     msg = Message(content=rslt, role=self.profile, cause_by=type(todo))
 
-                    rslt_json = extract_json_from_string_inhalt(rslt)
+                    rslt_json = extract_json_from_string(rslt)
                     kapitel_key = list(rslt_json.keys())[0]
                     teil_key = list(rslt_json[kapitel_key].keys())[1]
                     text = text + " " + rslt_json[kapitel_key][teil_key]
