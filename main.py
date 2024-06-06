@@ -26,7 +26,7 @@ async def main(
             "anzahlvonkapitel":9
         }
         """,
-        investment: float = 1,
+        investment: float = 2,
         n_round: int = 15,
 ):
     logger.info(idea)

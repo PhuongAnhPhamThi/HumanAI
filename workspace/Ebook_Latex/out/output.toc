@@ -1,10 +1,5 @@
 \babel@toc {ngerman}{}\relax 
-\contentsline {section}{\numberline {1} Der erste Eindruck }{3}{section.1}%
-\contentsline {section}{\numberline {2} Das gemeinsame Projekt }{6}{section.2}%
-\contentsline {section}{\numberline {3} Die ersten Funken }{8}{section.3}%
-\contentsline {section}{\numberline {4} Der große Streit }{11}{section.4}%
-\contentsline {section}{\numberline {5} Die Versöhnung }{14}{section.5}%
-\contentsline {section}{\numberline {6} Die Party }{16}{section.6}%
-\contentsline {section}{\numberline {7} Die Krise }{19}{section.7}%
-\contentsline {section}{\numberline {8} Der Durchbruch }{22}{section.8}%
-\contentsline {section}{\numberline {9} Das Happy End }{24}{section.9}%
+\contentsline {section}{\numberline {1} Die Prophezeiung }{3}{section.1}%
+\contentsline {section}{\numberline {2} Die Reise durch das All }{5}{section.2}%
+\contentsline {section}{\numberline {3} Die Schlacht der Sterne }{8}{section.3}%
+\contentsline {section}{\numberline {4} Das Schicksal erfüllen }{12}{section.4}%
