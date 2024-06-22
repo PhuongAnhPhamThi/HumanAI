@@ -1,3 +1,5 @@
+import threading
+import time
 import customtkinter as ctk
 from tkinter import ttk
 import json
@@ -14,6 +16,10 @@ ctk.set_default_color_theme("blue")
 
 geometry = "640x400"
 
+# Globale Variablen
+final_title = None
+wait_for_title = False
+wait_for_chapter = False
 
 def submit_prompt():
     global ui_prompt  # Use global to modify the global variables
@@ -83,6 +89,59 @@ def delete_title_elements(final_title):
     set_wait_for_title(False)
 
 
+def select_chapter(chapter_json):
+    global chapter_dict
+    chapter_dict = json.loads(chapter_json)
+    chapter_label.configure(text="Kapitel bearbeiten (optional)")
+    chapter_num_label = ctk.CTkLabel(chapter_root, text="")
+    chapter_num_label.pack()
+    chapter_titel_textbox = ctk.CTkTextbox(chapter_root, wrap="word", width=800, height=10)
+    chapter_titel_textbox.pack()
+    chapter_inhalt_textbox = ctk.CTkTextbox(chapter_root, wrap="word", width=800, height=200)
+    chapter_inhalt_textbox.pack()
+    chapter_button = ctk.CTkButton(chapter_root, text="Weiter",
+                                   command=lambda: update_chapters(chapter_titel_textbox.get("1.0", ctk.END),
+                                                                   chapter_inhalt_textbox.get("1.0", ctk.END),
+                                                                   chapter))
+    chapter_button.pack()
+    chapter_num = 1
+    for chapter in chapter_dict:
+        set_button_not_pressed(True)
+        chapter_num_label.configure(text=f"Kapitel {chapter_num}")
+        chapter_num += 1
+        chapter_titel_textbox.delete("1.0", ctk.END)
+        chapter_inhalt_textbox.delete("1.0", ctk.END)
+        chapter_titel_textbox.insert(ctk.END, chapter_dict[chapter]["Kapitel Titel"])
+        chapter_inhalt_textbox.insert(ctk.END, chapter_dict[chapter]["Kapitel Inhalt"])
+
+        while get_button_not_pressed():
+            time.sleep(1)
+    set_final_chapters(chapter_dict)
+    set_wait_for_chapter(False)
+    chapter_button.destroy()
+    chapter_inhalt_textbox.destroy()
+    chapter_titel_textbox.destroy()
+    chapter_num_label.destroy()
+    chapter_label.configure(text="Kapitel Bearbeiten Abgeschlossen.")
+    chapter_final_button = ctk.CTkButton(chapter_root, text="Weiter", command=chapter_root.destroy)
+    chapter_final_button.pack()
+
+
+def set_button_not_pressed(status: bool):
+    global button_not_pressed
+    button_not_pressed = status
+
+
+def get_button_not_pressed():
+    return button_not_pressed
+
+
+def update_chapters(titel_text, chapter_text, chapter):
+    chapter_dict[chapter]["Kapitel Titel"] = titel_text.strip()
+    chapter_dict[chapter]["Kapitel Inhalt"] = chapter_text.strip()
+    set_button_not_pressed(False)
+
+
 def set_final_title(new_final_title):
     global final_title
     final_title = new_final_title
@@ -99,6 +158,24 @@ def set_wait_for_title(status: bool):
 
 def get_wait_for_title():
     return wait_for_title
+
+
+def set_wait_for_chapter(status: bool):
+    global wait_for_chapter
+    wait_for_chapter = status
+
+
+def get_wait_for_chapter():
+    return wait_for_chapter
+
+
+def set_final_chapters(new_final_chapters):
+    global final_chapters
+    final_chapters = new_final_chapters
+
+
+def get_final_chapters():
+    return final_chapters
 
 
 def html_generated():
@@ -224,17 +301,50 @@ def start_second_ui(prompt):  # für book cover
     return saved_link
 
 
-def start_wait_ui(stop_event):
-    while not stop_event.is_set():
-        global wait_root, wait_label
-        wait_root = ctk.CTk()  # Verwendet Customtkinter für das zweite Fenster
-        wait_root.title("E-Book Generator")
-        wait_root.geometry(geometry)
+def start_wait_ui():
+    global wait_root, wait_label
+    wait_root = ctk.CTk()  # Verwendet Customtkinter für das zweite Fenster
+    wait_root.title("E-Book Generator")
+    wait_root.geometry(geometry)
 
-        wait_label = ctk.CTkLabel(wait_root, text="Warte, während das E-Book generiert wird.")
-        wait_label.pack()
+    wait_label = ctk.CTkLabel(wait_root, text="Warte, während das E-Book generiert wird.")
+    wait_label.pack()
 
-        wait_root.mainloop()
+    wait_root.mainloop()
+
+
+def start_chapter_ui():
+    global chapter_root, chapter_label
+    chapter_root = ctk.CTk()
+    chapter_root.title("E-Book Generator")
+    chapter_root.geometry(geometry)
+
+    chapter_label = ctk.CTkLabel(chapter_root, text="Kapitel werden geladen...")
+    chapter_label.pack()
+    set_wait_for_chapter(True)
+
+    if not get_wait_for_chapter():
+            chapter_root.quit()
+            chapter_root.destroy()
+
+    chapter_root.mainloop()
+
+
+class MyThread(threading.Thread):
+    def __init__(self, iD):
+        threading.Thread.__init__(self)
+        self.iD = iD
+
+    def run(self):
+        print("Starte Thread", self.iD)
+        if self.iD == 1:
+            start_wait_ui()
+        if self.iD == 2:
+            start_chapter_ui()
+        print("Beende Thread", self.iD)
+
+    def set_iD(self, new_iD):
+        self.iD = new_iD
 
 
 # This allows the module to be imported without immediately running the UI
