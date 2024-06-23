@@ -11,6 +11,8 @@ import os
 # note to Konrad: in the main function start_second_ui(prompt) i give prompt directly through parameter "prompt". you
 # dont need to import anything or write a extra func to save the prompt.
 
+
+
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
 
@@ -19,7 +21,7 @@ geometry = "640x400"
 # Globale Variablen
 final_title = None
 wait_for_title = False
-wait_for_chapter = False
+wait_for_chapter = True
 
 def submit_prompt():
     global ui_prompt  # Use global to modify the global variables
@@ -171,7 +173,7 @@ def get_wait_for_chapter():
 
 def set_final_chapters(new_final_chapters):
     global final_chapters
-    final_chapters = new_final_chapters
+    final_chapters = json.dumps(new_final_chapters)
 
 
 def get_final_chapters():
@@ -230,7 +232,7 @@ def start_ui():  # fur User Input am Anfang
     kapitel_label = ctk.CTkLabel(root, text="Anzahl der Kapitel:")
     kapitel_label.grid(row=4, column=0)
 
-    kapitel = ["3", "4", "5", "6", "7", "8", "9"]
+    kapitel = ["2","3", "4", "5", "6", "7", "8", "9"]
     kapitel_combobox = ctk.CTkComboBox(root, values=kapitel)
     kapitel_combobox.grid(row=4, column=1)
 
