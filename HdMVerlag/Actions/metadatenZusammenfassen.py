@@ -32,5 +32,4 @@ Alle obengenannte Elemente müssen vorhanden sein.
     async def run(self, context: str):
         prompt = self.PROMPT_TEMPLATE.format(context=context)
         rsp = await self._aask(prompt)
-        rsp1 = ""
         return rsp

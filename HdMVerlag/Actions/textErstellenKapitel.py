@@ -22,6 +22,4 @@ Kapitel {kapitelnummer}:{{
     async def run(self, context1: str, context2:str, genre: str, thema: str, tonalitaet: str,  teilnummer: int, kapitelnummer: int):
         prompt = self.PROMPT_TEMPLATE.format(context1=context1, context2=context2, genre=genre, thema=thema, tonalitaet=tonalitaet, teilnummer=teilnummer, kapitelnummer=kapitelnummer)
         rsp = await self._aask(prompt)
-        rsp1 = """
-"""
         return rsp

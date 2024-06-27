@@ -17,7 +17,4 @@ class Recherchieren(Action):
         prompt = self.PROMPT_TEMPLATE.format(genre=genre, thema=thema, tonalitaet=tonalitaet,
                                              anzahlvonkapitel=anzahlvonkapitel)
         rsp = await self._aask(prompt)
-        rsp1 = """
-       
-"""
         return rsp

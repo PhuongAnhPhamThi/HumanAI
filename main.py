@@ -8,7 +8,7 @@ from Roles.Human_User import Human_User
 from workspace.Utils.json_handle import remove_values_json
 from writeLatex import generate_pdf
 from ui.main_ui import start_ui
-from waitingEventHandle import wait_thread
+from ui.waitingEventHandle import wait_thread
 
 ui_prompt = start_ui()
 print(ui_prompt)

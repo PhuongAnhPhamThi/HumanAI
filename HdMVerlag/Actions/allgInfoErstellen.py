@@ -26,6 +26,4 @@ class allgInfoErstellen(Action):
         prompt = self.PROMPT_TEMPLATE.format(context=context, genre=genre, thema=thema, tonalitaet=tonalitaet,
                                              anzahlvonkapitel=anzahlvonkapitel)
         rsp = await self._aask(prompt)
-        rsp1 = """
-        """
         return rsp

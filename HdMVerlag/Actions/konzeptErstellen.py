@@ -15,6 +15,4 @@ class konzeptErstellen(Action):
     async def run(self, context1: str, context2: str):
         prompt = self.PROMPT_TEMPLATE.format(context1=context1, context2=context2)
         rsp = await self._aask(prompt)
-        rsp1 = """
-"""
         return rsp
