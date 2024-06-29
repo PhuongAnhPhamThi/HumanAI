@@ -22,6 +22,8 @@ output_dir = "C:/Users/admin/PycharmProjects/HumanAI/workspace/Ebook_Latex/out"
 
 ### Frontend:
 
+Packages: tkinter and customtkinter
+
 ## User Guide:
 
 [User_Guide.pdf](User_Guide.pdf)

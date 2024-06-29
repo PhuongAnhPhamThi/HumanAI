@@ -6,13 +6,8 @@ import json
 import webbrowser
 import os
 
-# from workspace.verbindung import set_link_coverEbook
 
-# note to Konrad: in the main function start_second_ui(prompt) i give prompt directly through parameter "prompt". you
-# dont need to import anything or write a extra func to save the prompt.
-
-
-
+# Set up appearance and color theme for customtkinter
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
 
@@ -24,9 +19,13 @@ wait_for_title = False
 wait_for_chapter = True
 
 def submit_prompt():
-    global ui_prompt  # Use global to modify the global variables
-    ui_genre = genre_combobox.get()  # Get the selected genre from the combobox
-    ui_thema = thema_entry.get()  # Get the selected gattung from the combobox
+    """
+    Collects user input from the UI and formats it as a JSON string.
+    Closes and destroys the main root window after submission.
+    """
+    global ui_prompt
+    ui_genre = genre_combobox.get()
+    ui_thema = thema_entry.get()
     ui_tonali = tonali_combobox.get()
     ui_kapitel = kapitel_combobox.get()
     ui_prompt = {
@@ -36,11 +35,14 @@ def submit_prompt():
         "anzahlvonkapitel": ui_kapitel
     }
     ui_prompt = json.dumps(ui_prompt, ensure_ascii=False, indent=2)
-    root.quit()  # Stop the mainloop
+    root.quit()
     root.destroy()
 
 
 def copy_to_clipboard(label):
+    """
+        Copies text from a given label to the clipboard.
+    """
     try:
         label.configure(state="normal")
         text = label.get("1.0", "end-1c")
@@ -53,12 +55,17 @@ def copy_to_clipboard(label):
 
 
 def open_url(url):
+    """
+        Opens the provided URL in the default web browser.
+    """
     webbrowser.open(url)
 
 
 def select_title(title_json):
+    """
+        Displays a selection of titles and ideas for the ebook.
+    """
     set_wait_for_title(True)
-    # title_dict = json.loads(title_json,strict=False)
     title_dict = title_json
     print(title_dict)
     wait_label.configure(text="Wählen Sie einen der folgenden Titel und Idee für Ihr Ebook:")
@@ -82,6 +89,9 @@ def select_title(title_json):
 
 
 def delete_title_elements(final_title):
+    """
+        Clears the title selection elements and updates the final title.
+    """
     wait_label.configure(text="Warte, während das E-Book generiert wird.")
     titel_textbox.destroy()
     titel_combobox.destroy()
@@ -92,6 +102,9 @@ def delete_title_elements(final_title):
 
 
 def select_chapter(chapter_json):
+    """
+        Displays and allows editing of chapters from the provided JSON.
+    """
     global chapter_dict
     chapter_dict = json.loads(chapter_json)
     chapter_label.configure(text="Kapitel bearbeiten (optional)")
@@ -130,68 +143,110 @@ def select_chapter(chapter_json):
 
 
 def set_button_not_pressed(status: bool):
+    """
+        Sets the status of the button press flag. Used to wait for the User to continue manually.
+    """
     global button_not_pressed
     button_not_pressed = status
 
 
 def get_button_not_pressed():
+    """
+        Returns the status of the button press flag.
+    """
     return button_not_pressed
 
 
 def update_chapters(titel_text, chapter_text, chapter):
+    """
+        Updates the chapter dictionary with edited title and content.
+    """
     chapter_dict[chapter]["Kapitel Titel"] = titel_text.strip()
     chapter_dict[chapter]["Kapitel Inhalt"] = chapter_text.strip()
     set_button_not_pressed(False)
 
 
 def set_final_title(new_final_title):
+    """
+        Sets the final title for the ebook.
+    """
     global final_title
     final_title = new_final_title
 
 
 def get_final_title():
+    """
+        Gets the final title of the ebook.
+    """
     return final_title
 
 
 def set_wait_for_title(status: bool):
+    """
+        Sets the waiting status for title selection.
+    """
     global wait_for_title
     wait_for_title = status
 
 
 def get_wait_for_title():
+    """
+        Gets the waiting status for title selection.
+    """
     return wait_for_title
 
 
 def set_wait_for_chapter(status: bool):
+    """
+        Sets the waiting status for chapter editing. Used to wait for the User.
+    """
     global wait_for_chapter
     wait_for_chapter = status
 
 
 def get_wait_for_chapter():
+    """
+        Gets the waiting status for chapter editing.
+    """
     return wait_for_chapter
 
 
 def set_final_chapters(new_final_chapters):
+    """
+        Sets the final chapters data.
+    """
     global final_chapters
     final_chapters = json.dumps(new_final_chapters)
 
 
 def get_final_chapters():
+    """
+        Gets the final chapters data.
+    """
     return final_chapters
 
 
 def html_generated():
+    """
+        Notifies the user that the ebook is almost ready and provides a continue button.
+    """
     wait_label.configure(text="Das E-Book ist fast fertig, klicken Sie auf \"Weiter\" um fortzufahren.")
     continue_button = ctk.CTkButton(wait_root, text="Weiter", command=wait_root.destroy)
     continue_button.pack()
 
 
 def change_thema_entry(thema):
+    """
+        Changes the theme entry based on user selection.
+    """
     thema_entry.delete(0, ctk.END)
     thema_entry.insert(0, thema)
 
 
-def start_ui():  # fur User Input am Anfang
+def start_ui():
+    """
+        Starts the main user interface for collecting initial input.
+    """
     global root, genre_combobox, tonali_combobox, kapitel_combobox, thema_entry
     root = ctk.CTk()
     root.title("E-Book Generator")
@@ -241,21 +296,27 @@ def start_ui():  # fur User Input am Anfang
     generate_button.grid(row=5, column=1)
 
     root.mainloop()
-    return ui_prompt  # Return the selections after the UI has closed
+    return ui_prompt
 
 
-def start_second_ui(prompt):  # für book cover
+def start_second_ui(prompt):
+    """
+        Starts the second user interface for generating the ebook cover.
+    """
     global second_root, cover_link_entry, saved_link
     second_root = ctk.CTk()
     second_root.title("E-Book Generator")
     second_root.geometry(geometry)
 
-    saved_link = None  # Initialize saved_link variable
+    saved_link = None
 
     def save_embed_link():
+        """
+                Saves the embed link entered by the user.
+        """
         global saved_link
-        saved_link = cover_link_entry.get()  # Get the value of cover_link_entry
-        second_root.destroy()  # Close the UI
+        saved_link = cover_link_entry.get()
+        second_root.destroy()
 
     heading = ctk.CTkFrame(second_root, width=400)
     heading.pack(anchor="w")
@@ -273,30 +334,22 @@ def start_second_ui(prompt):  # für book cover
     cover_link_button = ctk.CTkButton(cover_link, text="Link speichern", command=save_embed_link)
     cover_link_button.grid(row=1, column=1)
 
-    # Text mit dem Cover Prompt
+    # Text with the cover prompt
     cover_prompt_label = ctk.CTkTextbox(cover, wrap="word", height=160, width=500)
     cover_prompt_label.grid(row=0, column=0, sticky="w")
     cover_prompt_label.insert(ctk.END, prompt)
     cover_prompt_label.configure(state="disabled")
 
-    # Button zum Kopieren des Texts
+    # Button to copy the text
     copy_button = ctk.CTkButton(cover, text="Kopieren", command=lambda: copy_to_clipboard(cover_prompt_label))
     copy_button.grid(row=0, column=1, sticky="se")
 
-    # Weiterleitung zu Bing Copilot
+    # Redirect to Bing Copilot
     copilot_label = ctk.CTkLabel(cover, text="Wir empfehlen dafür den Bing Copilot zu verwenden.")
     copilot_label.grid(row=1, column=0)
     copilot_button = ctk.CTkButton(cover, text="Zu Copilot",
                                    command=lambda: open_url("https://www.bing.com/images/create"))
     copilot_button.grid(row=1, column=1)
-
-    # Weiterleitung zu Imgbb
-    """
-    imgbb_label = ctk.CTkLabel(cover, text="Lade das online hoch, wir empfehlen imgbb")
-    imgbb_label.grid(row=2, column=0)
-    imgbb_button = ctk.CTkButton(cover, text="Zu imgbb", command=lambda: open_url("https://de.imgbb.com/"))
-    imgbb_button.grid(row=2, column=1)
-    """
 
     second_root.mainloop()
 
@@ -304,8 +357,11 @@ def start_second_ui(prompt):  # für book cover
 
 
 def start_wait_ui():
+    """
+        Starts the waiting UI while the ebook is being generated.
+    """
     global wait_root, wait_label
-    wait_root = ctk.CTk()  # Verwendet Customtkinter für das zweite Fenster
+    wait_root = ctk.CTk()
     wait_root.title("E-Book Generator")
     wait_root.geometry(geometry)
 
@@ -316,6 +372,9 @@ def start_wait_ui():
 
 
 def start_chapter_ui():
+    """
+        Starts the UI for editing chapters.
+    """
     global chapter_root, chapter_label
     chapter_root = ctk.CTk()
     chapter_root.title("E-Book Generator")
@@ -333,11 +392,19 @@ def start_chapter_ui():
 
 
 class MyThread(threading.Thread):
+    """
+        Custom thread class for managing UI threads.
+    """
     def __init__(self, iD):
         threading.Thread.__init__(self)
         self.iD = iD
 
     def run(self):
+        """
+            Runs the appropriate UI based on thread ID.
+            iD = 1: wait_ui
+            iD = 2: chapter_ui
+        """
         print("Starte Thread", self.iD)
         if self.iD == 1:
             start_wait_ui()
@@ -346,13 +413,15 @@ class MyThread(threading.Thread):
         print("Beende Thread", self.iD)
 
     def set_iD(self, new_iD):
+        """
+            Sets a new ID for the thread.
+        """
         self.iD = new_iD
 
 
-# This allows the module to be imported without immediately running the UI
 if __name__ == "__main__":
-    # start_ui()
-    start_second_ui()
+    start_ui()
+    # start_second_ui()
     # link = start_second_ui("Prompt text")
     # print("Link entered:", link)
     # start_wait_ui(stop_event=None)
